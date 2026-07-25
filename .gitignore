@@ -1,0 +1,31 @@
+# Nuxt
+.nuxt
+.output
+.nitro
+.cache
+dist
+
+# Node
+node_modules
+npm-debug.log*
+
+# Env
+.env
+.env.*
+!.env.example
+
+# Editor
+.vscode
+.idea
+.DS_Store
+
+/generated/prisma
+
+.vercel
+.env*
+
+# Uploads
+/storage
+
+# Backups
+/backups

@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "postgresql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model Admin {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  nom       String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Avis {
+  id        Int      @id @default(autoincrement())
+  nom       String
+  message   String
+  etoiles   Int      @default(5)
+  contact   String?
+  statut    String   @default("en_attente")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Terrain {
+  id          Int        @id @default(autoincrement())
+  lieu        String
+  quartier    String
+  zone        String?
+  superficie  String
+  prix        String
+  statut      String     @default("Disponible")
+  description String?
+  images      Media[]
+  documents   Document[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Media {
+  id        Int      @id @default(autoincrement())
+  url       String
+  type      String   @default("image")
+  ordre     Int      @default(0)
+  terrainId Int?
+  terrain   Terrain? @relation(fields: [terrainId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
+
+model Document {
+  id        Int      @id @default(autoincrement())
+  url       String
+  type      String   @default("attestation_villageoise")
+  label     String?
+  terrainId Int
+  terrain   Terrain  @relation(fields: [terrainId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
