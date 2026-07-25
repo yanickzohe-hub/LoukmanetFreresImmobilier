@@ -1,0 +1,133 @@
+# Loukman & Frères Immobilier
+
+## Aperçu
+Site vitrine + admin pour une agence immobilière basée à Bonoua, Côte d'Ivoire. Vente de terrains, lotissement, construction, gestion immobilière.
+
+## Stack
+- **Framework**: Nuxt 3 (Vue 3, Composition API)
+- **CSS**: Tailwind CSS via @nuxtjs/tailwindcss
+- **Image**: @nuxt/image
+- **Base de données**: SQLite + Prisma ORM
+- **Auth**: JWT (jsonwebtoken + bcryptjs)
+- **Email**: Nodemailer (SMTP)
+- **Animations**: Lottie (vue3-lottie), Cobe (globe 3D)
+- **Polices**: Montserrat (headings), Inter (body) via @fontsource
+- **Déploiement**: Vercel (nitro preset)
+
+## Structure
+
+```
+├── app.vue                  # Entry point: NuxtLayout + NuxtPage
+├── nuxt.config.ts           # Config Nuxt, modules, SEO, image, runtime
+├── tailwind.config.js       # Couleurs navy/gold, polices, ombres
+├── layouts/
+│   └── default.vue          # SiteHeader + <slot> + SiteFooter + ToastContainer
+├── pages/
+│   ├── index.vue            # Accueil (hero, services, about, stats, terrains, testimonials, cta)
+│   ├── a-propos.vue         # Page "À propos"
+│   ├── services.vue         # Page "Services"
+│   ├── contact.vue          # Formulaire de contact
+│   ├── terrains.vue         # Liste des terrains disponibles
+│   ├── terrains/[id].vue    # Détail d'un terrain
+│   ├── admin/               # Interface admin (login, dashboard, CRUD terrains)
+│   └── 404.vue
+├── components/
+│   ├── SiteHeader.vue       # Navbar responsive avec menu mobile
+│   ├── SiteFooter.vue       # Footer avec logo, liens, contact, copyright
+│   ├── HeroSection.vue      # Hero avec titre, sous-titre, CTA, globe 3D
+│   ├── ServicesGrid.vue     # Services en stacked cards 3D + logos "Notre Marque"
+│   ├── FeaturesSection.vue  # Grille de features avec icônes
+│   ├── AboutPreview.vue     # Aperçu "À propos"
+│   ├── StatsSection.vue     # Statistiques (années, parcelles, clients, etc.)
+│   ├── TerrainsGallery.vue  # Galerie terrains avec swiper + zoom modal
+│   ├── TestimonialsSection.vue # Témoignages en slider
+│   ├── CtaSection.vue       # Call-to-action avec fond overlay
+│   ├── AnimatedHouse.vue    # Animation maison Lottie
+│   ├── GlobeCdn.vue         # Globe 3D interactif (Cobe)
+│   ├── LottieAnimation.vue  # Wrapper Lottie
+│   ├── WhatsAppButton.vue   # Floating button WhatsApp
+│   ├── ToastContainer.vue   # Notifications toast
+│   └── Icon.vue             # Icônes SVG inline
+├── composables/
+│   ├── useToast.ts          # Système de toasts (success/error)
+│   ├── useAdminAuth.ts      # Auth admin (login, logout, session)
+│   ├── useAnimateOnScroll.ts # IntersectionObserver pour animations
+│   └── useLottie.ts         # Helper Lottie
+├── server/
+│   ├── utils/prisma.ts      # PrismaClient singleton
+│   ├── middleware/auth.ts    # JWT guard pour /api/admin/**
+│   └── api/
+│       ├── __sitemap__/urls.ts          # URLs dynamiques pour sitemap
+│       ├── contact.post.ts              # Formulaire de contact (email SMTP)
+│       ├── terrains/index.get.ts        # Public: terrains disponibles
+│       ├── terrains/[id]/index.get.ts   # Public: détail terrain
+│       ├── auth/login.post.ts           # Admin login
+│       ├── auth/me.get.ts               # Admin: profil courant
+│       ├── auth/seed.post.ts            # Admin: seed initial
+│       ├── admin/terrains/index.get.ts  # Admin: tous les terrains
+│       ├── admin/terrains/index.post.ts # Admin: créer terrain
+│       ├── admin/terrains/[id]/index.get.ts    # Admin: détail
+│       ├── admin/terrains/[id]/index.put.ts    # Admin: modifier
+│       ├── admin/terrains/[id]/index.delete.ts # Admin: supprimer
+│       ├── admin/medias/index.post.ts   # Admin: ajouter média
+│       └── admin/medias/[id]/index.delete.ts   # Admin: supprimer média
+├── prisma/
+│   ├── schema.prisma         # Admin, Terrain, Media
+│   └── seed.ts               # Crée admin par défaut
+├── assets/css/main.css       # Styles globaux, animations, utilities
+└── public/                   # Images statiques (logo1.jpg, logo2.jpeg, logo3.jpeg, favicon, og-image)
+```
+
+## Palette
+- **navy**: #0B1B3D (primary)
+- **gold**: #F5A623 (accent)
+- **white**: bg cards/sections
+- **gray**: texte secondaire
+
+## Polices
+- **Headings**: Montserrat (400, 500, 600, 700)
+- **Body**: Inter (300, 400, 500, 600)
+
+## Base de données (SQLite)
+```
+Admin:    id, email (unique), password (bcrypt), nom, createdAt, updatedAt
+Terrain:  id, lieu, quartier, superficie, prix, statut (Disponible/Vendu/Reservé), description?, createdAt, updatedAt
+Media:    id, url, type (default: image), terrainId? (FK -> Terrain, ON DELETE CASCADE), createdAt
+```
+
+## Routes API
+- `GET /api/terrains` — terrains disponibles
+- `GET /api/terrains/:id` — détail terrain
+- `POST /api/contact` — formulaire de contact
+- `POST /api/auth/login` — login admin (return JWT)
+- `GET /api/auth/me` — profil admin (auth required)
+- `POST /api/auth/seed` — créer admin initial
+- `GET/POST /api/admin/terrains` — CRUD admin terrains
+- `GET/PUT/DELETE /api/admin/terrains/:id` — CRUD admin terrain
+- `POST /api/admin/medias` — ajouter média
+- `DELETE /api/admin/medias/:id` — supprimer média
+
+## Composants clés
+- **ServicesGrid.vue**: Stacked cards 3D avec auto-rotation (4s), pagination, section "Notre Marque" avec logos cliquables (ouvre un modal détail)
+- **TerrainsGallery.vue**: Grille responsive avec IntersectionObserver, zoom modal au clic
+- **HeroSection.vue**: Titre fluide, sous-titre, CTA gold, globe 3D (Cobe)
+- **SiteHeader.vue**: Nav fixe avec menu mobile hamburger, logo
+- **SiteFooter.vue**: Logo, navigation, contact, copyright
+
+## Pages
+- **/** : Hero + Services + About + Stats + Terrains + Testimonials + CTA
+- **/terrains** : Galerie complète des terrains dispo
+- **/terrains/:id** : Détail terrain
+- **/services** : Détail des services
+- **/a-propos** : Présentation agence
+- **/contact** : Formulaire de contact
+- **/admin** : Interface admin (liste + CRUD)
+- **/admin/login** : Login admin
+
+## Configuration
+- Site URL: https://loukman-immobilier.ci (configurable via NUXT_PUBLIC_SITE_URL)
+- SEO: meta tags FR, og:image, sitemap auto
+- Image domains: images.unsplash.com, placehold.co
+- Email: SMTP via runtimeConfig (emailHost, emailUser, emailPass, emailTo)
+- JWT: secret via JWT_SECRET (default: super-secret-key-change-in-production)
+- Admin seed: ADMIN_EMAIL / ADMIN_PASSWORD / ADMIN_SEED_SECRET

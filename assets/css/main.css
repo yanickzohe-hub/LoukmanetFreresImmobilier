@@ -1,0 +1,231 @@
+@import '@fontsource/montserrat/latin-400.css';
+@import '@fontsource/montserrat/latin-500.css';
+@import '@fontsource/montserrat/latin-600.css';
+@import '@fontsource/montserrat/latin-700.css';
+@import '@fontsource/inter/latin-300.css';
+@import '@fontsource/inter/latin-400.css';
+@import '@fontsource/inter/latin-500.css';
+@import '@fontsource/inter/latin-600.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+body {
+  @apply font-body text-gray-700 bg-white leading-relaxed;
+  overflow-x: hidden;
+  width: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+*, *::before, *::after {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+img, iframe, video, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+input, textarea, select {
+  font-size: 16px !important;
+}
+
+a, button, .btn-cta, .btn-outline {
+  min-height: 44px;
+}
+
+h1, h2, h3, h4 {
+  @apply font-heading text-navy leading-snug;
+}
+
+h1 { @apply text-3xl md:text-4xl lg:text-5xl font-bold; }
+h2 { @apply text-2xl md:text-3xl font-semibold; }
+h3 { @apply text-xl md:text-2xl font-semibold; }
+h4 { @apply text-lg md:text-xl font-medium; }
+
+p { @apply leading-relaxed; }
+
+.btn-cta {
+  @apply inline-flex items-center justify-center gap-2 bg-gold hover:bg-gold-light
+         text-navy font-heading font-semibold text-sm md:text-base
+         px-5 md:px-7 py-2.5 md:py-3 rounded-xl
+         transition-all duration-300 active:scale-[0.98];
+}
+
+.btn-outline {
+  @apply inline-flex items-center justify-center gap-2 border-2 border-navy/20
+         text-navy font-heading font-medium text-sm md:text-base
+         px-5 md:px-7 py-2.5 md:py-3 rounded-xl
+         transition-all duration-300 hover:border-navy hover:bg-navy hover:text-white
+         active:scale-[0.98];
+}
+
+.btn-outline-white {
+  @apply inline-flex items-center justify-center gap-2 border-2 border-white/20
+         text-white font-heading font-medium text-sm md:text-base
+         px-5 md:px-7 py-2.5 md:py-3 rounded-xl
+         transition-all duration-300 hover:border-white hover:bg-white hover:text-navy
+         active:scale-[0.98];
+}
+
+.section-padding {
+  @apply py-16 md:py-20 lg:py-24 px-4 md:px-6;
+}
+
+.section-container {
+  @apply mx-auto;
+}
+
+.card {
+  @apply bg-white rounded-xl border border-gray-100 shadow-soft
+         transition-all duration-300 p-6 md:p-8;
+}
+
+.card-hover {
+  @apply card hover:shadow-card hover:-translate-y-0.5;
+}
+
+.card-media {
+  @apply bg-white rounded-xl border border-gray-100 shadow-soft
+         overflow-hidden transition-all duration-300
+         hover:shadow-card hover:-translate-y-0.5;
+}
+
+.card-media img {
+  @apply w-full h-48 object-cover;
+}
+
+.glass {
+  @apply bg-white/90 backdrop-blur-md;
+}
+
+.glass-dark {
+  @apply bg-navy/90 backdrop-blur-md;
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.animate-fade-in-up { animation: fadeInUp 0.6s ease-out both; }
+.animate-fade-in { animation: fadeIn 0.5s ease-out both; }
+.animate-slide-in-left { animation: slideInLeft 0.5s ease-out both; }
+.animate-slide-in-right { animation: slideInRight 0.5s ease-out both; }
+.animate-scale-in { animation: scaleIn 0.4s ease-out both; }
+
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
+
+.section-divider {
+  @apply w-16 h-0.5 bg-gold/60 rounded-full mx-auto mb-5;
+}
+
+/* Skeleton loader */
+.skeleton {
+  @apply bg-gray-200 rounded animate-pulse;
+}
+
+/* Toast notifications */
+.toast-container {
+  @apply fixed bottom-6 right-6 z-[99999] flex flex-col gap-3 pointer-events-none;
+}
+.toast {
+  @apply pointer-events-auto px-5 py-3 rounded-xl shadow-lg text-sm font-medium
+         flex items-center gap-3 min-h-[44px]
+         animate-slide-in-right;
+}
+.toast-success {
+  @apply bg-green-600 text-white;
+}
+.toast-error {
+  @apply bg-red-600 text-white;
+}
+
+/* Floating label — inside → on border */
+.floating-group {
+  @apply relative border border-gray-200 rounded-lg transition-all duration-200;
+}
+.floating-group:focus-within {
+  @apply border-navy;
+}
+.floating-group textarea,
+.floating-group input {
+  @apply w-full bg-transparent border-none px-4 pt-5 pb-2.5 text-sm outline-none resize-none;
+}
+.floating-group input:disabled,
+.floating-group textarea:disabled {
+  @apply opacity-60 cursor-not-allowed;
+}
+.floating-group label {
+  @apply absolute left-3 top-3.5 text-sm text-gray-500 transition-all duration-200 pointer-events-none;
+}
+.floating-group:focus-within label {
+  @apply text-xs -top-2.5 text-navy bg-white px-1;
+}
+.floating-group input:not(:placeholder-shown) ~ label,
+.floating-group textarea:not(:placeholder-shown) ~ label {
+  @apply text-xs -top-2.5 text-navy bg-white px-1;
+}
+
+/* Focus visible */
+*:focus-visible {
+  @apply outline-2 outline-offset-2 outline-gold;
+}
+
+/* Terrains Grid Cards */
+.card-3d-grid {
+  transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--i, 0) * 80ms);
+  transform: translateY(40px);
+  opacity: 0;
+}
+.card-3d-grid.in-view {
+  transform: translateY(0);
+  opacity: 1;
+}
+.card-3d-grid:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px -12px rgba(0,0,0,0.2);
+}
+
+@media (max-width: 374px) {
+  h1 { @apply text-2xl; }
+  .section-padding { @apply px-4; }
+}

@@ -1,0 +1,30 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./data:/app/prisma
+      - ./public/uploads:/app/public/uploads
+      - ./.env:/app/.env
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=file:/app/prisma/dev.db
+      - JWT_SECRET=${JWT_SECRET}
+      - ADMIN_EMAIL=${ADMIN_EMAIL}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - ADMIN_NOM=${ADMIN_NOM}
+      - NUXT_EMAIL_HOST=${NUXT_EMAIL_HOST}
+      - NUXT_EMAIL_USER=${NUXT_EMAIL_USER}
+      - NUXT_EMAIL_PASS=${NUXT_EMAIL_PASS}
+      - NUXT_EMAIL_TO=${NUXT_EMAIL_TO}
+      - NUXT_PUBLIC_SITE_URL=${NUXT_PUBLIC_SITE_URL:-https://loukman-immobilier.ci}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000',r=>process.exit(r.statusCode===200?0:1))"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
