@@ -4,7 +4,7 @@ useAnimateOnScroll()
 const features = [
   {
     title: 'Vente de terrains',
-    desc: 'Terrains sécurisés à Bonoua et environs avec titres fonciers clairs.',
+    desc: 'Terrains sécurisés dans le Sud-Comoé, à Yamoussoukro et partout en Côte d\'Ivoire avec titres fonciers clairs.',
     icon: 'home',
   },
   {

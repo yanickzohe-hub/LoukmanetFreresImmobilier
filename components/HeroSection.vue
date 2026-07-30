@@ -9,14 +9,14 @@
             Paysage de terrains à Bonoua
           </p>
           <p class="text-white/60 text-xs md:text-sm mb-3">
-            Bonoua · Grand-Bassam · Côte d'Ivoire
+            Sud-Comoé · Yamoussoukro · Côte d'Ivoire
           </p>
           <h1 class="text-[clamp(1.75rem,3.5vw,3.25rem)] text-white font-bold mb-4 leading-snug max-w-lg">
             Loukman & Frères <span class="text-gold">Immobilier</span>
           </h1>
           <p class="text-white/70 text-sm md:text-base max-w-md mb-8 leading-relaxed">
             Terrains viabilisés, lotissement, construction et gestion immobilière
-            — depuis 2012 au service de la région de Bonoua.
+            — depuis 2012 au service du Sud-Comoé, Yamoussoukro et de toute la Côte d'Ivoire.
           </p>
           <div class="flex flex-col sm:flex-row gap-3 md:gap-4">
             <NuxtLink to="/terrains" class="btn-cta text-sm md:text-base">

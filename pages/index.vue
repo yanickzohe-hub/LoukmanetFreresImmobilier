@@ -35,7 +35,7 @@ const siteUrl = config.public.siteUrl || 'https://loukman-immobilier.ci'
 useHead({
   title: 'Loukman & Frères Immobilier | Terrains, Construction et Gestion Immobilière à Bonoua',
   meta: [
-    { name: 'description', content: 'Vente de terrains, lotissement, construction et gestion immobilière à Bonoua, Côte d\'Ivoire. Depuis 2012, votre partenaire de confiance dans la région de Bonoua.' },
+    { name: 'description', content: 'Vente de terrains, lotissement, construction et gestion immobilière dans le Sud-Comoé, à Yamoussoukro et partout en Côte d\'Ivoire. Depuis 2012, votre partenaire de confiance.' },
     { name: 'keywords', content: 'vente terrain bonoua, achat terrain grand-bassam, immobilier côte d\'ivoire, lotissement yaou, terrain viabilisé, construction villa bonoua, agence immobilière, terrains disponibles, investissement immobilier, loukman immobilier' },
   ],
   script: [
@@ -57,8 +57,8 @@ useHead({
         },
         openingHours: 'Mo-Fr 08:00-18:00, Sa 09:00-13:00',
         priceRange: '$$',
-        description: 'Vente de terrains, lotissement, aménagement, construction et gestion immobilière à Bonoua, Côte d\'Ivoire. Depuis 2012.',
-        areaServed: ['Bonoua', 'Grand-Bassam', 'Yaou', 'Côte d\'Ivoire'],
+        description: 'Vente de terrains, lotissement, aménagement, construction et gestion immobilière dans le Sud-Comoé, à Yamoussoukro et partout en Côte d\'Ivoire. Depuis 2012.',
+        areaServed: ['Sud-Comoé', 'Yamoussoukro', 'Bonoua', 'Grand-Bassam', 'Côte d\'Ivoire'],
         sameAs: [
           `https://wa.me/2250708342144`,
         ]

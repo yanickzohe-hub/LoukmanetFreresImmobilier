@@ -20,7 +20,7 @@ const sections = [
     id: 'terrains',
     title: 'Terrains Disponibles',
     tag: '02',
-    desc: 'Terrains viabilisés et sécurisés à Bonoua, Yaou Nouveau Quartier et environs.',
+    desc: 'Terrains viabilisés et sécurisés dans le Sud-Comoé, à Yamoussoukro et partout en Côte d\'Ivoire.',
     features: [
       'Bonoua — Yaou Nouveau Quartier',
       'Bonoua — Extension',

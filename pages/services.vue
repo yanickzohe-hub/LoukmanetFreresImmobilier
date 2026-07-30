@@ -2,7 +2,7 @@
 useHead({
   title: 'Nos Services | Loukman & Frères Immobilier',
   meta: [
-    { name: 'description', content: 'Vente de terrains, lotissement, aménagement, construction et gestion immobilière à Bonoua, Côte d\'Ivoire. Découvrez tous nos services.' },
+    { name: 'description', content: 'Vente de terrains, lotissement, aménagement, construction et gestion immobilière dans le Sud-Comoé, à Yamoussoukro et partout en Côte d\'Ivoire. Découvrez tous nos services.' },
     { name: 'keywords', content: 'service immobilier bonoua, vente terrain, lotissement, construction villa, aménagement terrain, gestion immobilière, accompagnement projet' },
   ]
 })
