@@ -1,7 +1,6 @@
 import prisma from '../../../../utils/prisma'
 
 export default defineEventHandler(async (event) => {
-  const terrainId = parseInt(event.context.params!.id, 10)
   const body = await readBody(event)
 
   if (!Array.isArray(body.ordre)) {

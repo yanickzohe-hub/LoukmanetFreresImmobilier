@@ -6,7 +6,7 @@
  */
 
 export default defineNuxtPlugin(() => {
-  if (process.server) return
+  if (import.meta.server) return
 
   const observer = new IntersectionObserver(
     (entries) => {
