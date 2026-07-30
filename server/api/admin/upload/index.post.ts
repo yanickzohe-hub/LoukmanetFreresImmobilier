@@ -58,7 +58,7 @@ export default defineEventHandler(async (event) => {
 
     return uploaded
   } catch (err) {
-    console.error('Upload error:', err)
+    console.error('Upload error:', err) // eslint-disable-line no-console
     throw createError({
       statusCode: err.statusCode || 500,
       statusMessage: err.statusMessage || 'Erreur lors du téléchargement du fichier'

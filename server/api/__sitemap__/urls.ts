@@ -21,7 +21,7 @@ export default defineEventHandler(async () => {
       })),
     ]
   } catch (err) {
-    console.error('Sitemap error:', err)
+    console.error('Sitemap error:', err) // eslint-disable-line no-console
     return [
       { loc: '/', changefreq: 'daily', priority: '1.0' },
       { loc: '/terrains', changefreq: 'daily', priority: '0.9' },
