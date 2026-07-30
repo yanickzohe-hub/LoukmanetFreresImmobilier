@@ -1,10 +1,46 @@
 <script setup>
+const config = useRuntimeConfig()
+const siteUrl = config.public.siteUrl || 'https://loukman-immobilier.com'
+
 useHead({
   title: 'À Propos | Loukman & Frères Immobilier',
   meta: [
     { name: 'description', content: 'Découvrez Loukman & Frères Immobilier — expertise locale depuis 2012 dans le Sud-Comoé, à Yamoussoukro et partout en Côte d\'Ivoire. Vente de terrains, lotissement, construction et gestion immobilière.' },
     { name: 'keywords', content: 'loukman immobilier, agence immobilière bonoua, qui sommes-nous, expertise immobilière, atchunin antoine, immobilier côte d\'ivoire' },
-  ]
+    { property: 'og:title', content: 'À Propos | Loukman & Frères Immobilier' },
+    { property: 'og:description', content: 'Découvrez Loukman & Frères Immobilier — expertise locale depuis 2012 dans le Sud-Comoé, à Yamoussoukro et partout en Côte d\'Ivoire.' },
+    { property: 'og:image', content: siteUrl + '/og-image.svg' },
+    { property: 'og:url', content: siteUrl + '/a-propos' },
+    { property: 'og:type', content: 'website' },
+    { property: 'og:locale', content: 'fr_CI' },
+    { name: 'twitter:card', content: 'summary_large_image' },
+    { name: 'twitter:image', content: siteUrl + '/og-image.svg' },
+  ],
+  link: [
+    { rel: 'canonical', href: siteUrl + '/a-propos' },
+  ],
+  script: [
+    {
+      type: 'application/ld+json',
+      children: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Organization',
+        name: 'Loukman & Frères Immobilier',
+        url: siteUrl,
+        logo: siteUrl + '/logo1.png',
+        description: 'Agence immobilière basée à Bonoua — vente de terrains, lotissement, construction et gestion immobilière.',
+        foundingDate: '2012',
+        founder: { '@type': 'Person', name: 'Atchunin Y. Antoine' },
+        address: { '@type': 'PostalAddress', addressLocality: 'Bonoua', addressCountry: 'CI' },
+        contactPoint: {
+          '@type': 'ContactPoint',
+          telephone: '+2250708342144',
+          email: 'loukmanfreresimmobilier@gmail.com',
+          contactType: 'customer service',
+        },
+      }),
+    },
+  ],
 })
 
 useAnimateOnScroll()
@@ -35,7 +71,7 @@ const blocs = [
       <div class="section-container">
         <div class="grid md:grid-cols-2 gap-10 md:gap-16 items-center animate-on-scroll">
           <div>
-            <NuxtImg :src="pdgImage" alt="PDG Atchunin Y. Antoine - Loukman & Frères Immobilier" class="rounded-xl shadow-soft w-full h-auto" width="600" />
+            <NuxtImg :src="pdgImage" alt="PDG Atchunin Y. Antoine - Loukman & Frères Immobilier" loading="lazy" class="rounded-xl shadow-soft w-full h-auto" width="600" />
           </div>
           <div>
             <h2 class="text-fluid-title mb-3">Une équipe dédiée</h2>

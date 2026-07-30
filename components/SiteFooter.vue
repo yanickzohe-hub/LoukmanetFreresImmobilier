@@ -15,9 +15,9 @@
             <a href="tel:0708342144" class="flex items-center gap-1 hover:text-white transition-colors">
               <Icon name="phone" class="w-3 h-3 text-gold shrink-0" /> 07 08 34 21 44
             </a>
-            <a href="mailto:contact@loukmanfrere.ci" class="flex items-center gap-1 hover:text-white transition-colors">
-              <Icon name="mail" class="w-3 h-3 text-gold shrink-0" /> Email
-            </a>
+             <a href="mailto:loukmanfreresimmobilier@gmail.com" class="flex items-center gap-1 hover:text-white transition-colors">
+               <Icon name="mail" class="w-3 h-3 text-gold shrink-0" /> loukmanfreresimmobilier@gmail.com
+             </a>
             <p class="flex items-center gap-1">
               <Icon name="map-pin" class="w-3 h-3 text-gold shrink-0" /> Bonoua
             </p>
@@ -46,7 +46,7 @@
 
       <div class="border-t border-white/10 mt-3 md:mt-6 pt-2 md:pt-4 flex flex-col sm:flex-row justify-between items-center gap-0.5 md:gap-1.5 text-[10px] md:text-[11px] text-white/40 md:text-white/50 text-center sm:text-left">
         <p>&copy; {{ new Date().getFullYear() }} Loukman & Frères</p>
-        <p>Capital : 1 000 000 FCFA — RCCM : CI-ABJ-2012-B-XXXXX</p>
+        <p>Capital : 1 000 000 FCFA — RC : RC-CI-GRDBSM-2023-B-3985 — SIS : 19 BP 36 ABIDJAN 19</p>
       </div>
     </div>
   </footer>

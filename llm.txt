@@ -125,7 +125,7 @@ Media:    id, url, type (default: image), terrainId? (FK -> Terrain, ON DELETE C
 - **/admin/login** : Login admin
 
 ## Configuration
-- Site URL: https://loukman-immobilier.ci (configurable via NUXT_PUBLIC_SITE_URL)
+- Site URL: https://loukman-immobilier.com (configurable via NUXT_PUBLIC_SITE_URL)
 - SEO: meta tags FR, og:image, sitemap auto
 - Image domains: images.unsplash.com, placehold.co
 - Email: SMTP via runtimeConfig (emailHost, emailUser, emailPass, emailTo)

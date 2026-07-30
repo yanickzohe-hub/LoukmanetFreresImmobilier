@@ -1,15 +1,53 @@
 <script setup>
+const config = useRuntimeConfig()
+const siteUrl = config.public.siteUrl || 'https://loukman-immobilier.com'
+
+const { data: terrains, status, error } = useFetch('/api/terrains', { key: 'catalog-terrains' })
+
+const itemListJsonLd = computed(() => {
+  if (!terrains.value) return null
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Terrains Disponibles | Loukman & Frères Immobilier',
+    description: 'Consultez nos terrains disponibles dans le Sud-Comoé, à Yamoussoukro et partout en Côte d\'Ivoire.',
+    url: siteUrl + '/terrains',
+    numberOfItems: terrains.value.length,
+    itemListElement: terrains.value.slice(0, 9).map((t, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      url: siteUrl + '/terrains/' + t.id,
+      name: `Terrain à ${t.lieu}`,
+    })),
+  }
+})
+
 useHead({
   title: 'Terrains Disponibles | Loukman & Frères Immobilier',
   meta: [
     { name: 'description', content: 'Consultez nos terrains disponibles dans le Sud-Comoé, à Yamoussoukro et partout en Côte d\'Ivoire. Terrains viabilisés et sécurisés pour votre projet immobilier.' },
     { name: 'keywords', content: 'terrain bonoua, achat terrain, vente terrain côte d\'ivoire, terrains disponibles, lotissement yaou, terrain viabilisé, investissement terrain, prix terrain bonoua' },
-  ]
+    { property: 'og:title', content: 'Terrains Disponibles | Loukman & Frères Immobilier' },
+    { property: 'og:description', content: 'Consultez nos terrains disponibles dans le Sud-Comoé, à Yamoussoukro et partout en Côte d\'Ivoire.' },
+    { property: 'og:image', content: siteUrl + '/og-image.svg' },
+    { property: 'og:url', content: siteUrl + '/terrains' },
+    { property: 'og:type', content: 'website' },
+    { property: 'og:locale', content: 'fr_CI' },
+    { name: 'twitter:card', content: 'summary_large_image' },
+    { name: 'twitter:image', content: siteUrl + '/og-image.svg' },
+  ],
+  link: [
+    { rel: 'canonical', href: siteUrl + '/terrains' },
+  ],
+  script: [
+    {
+      type: 'application/ld+json',
+      children: computed(() => itemListJsonLd.value ? JSON.stringify(itemListJsonLd.value) : ''),
+    },
+  ],
 })
 
 useAnimateOnScroll()
-
-const { data: terrains, status, error } = await useFetch('/api/terrains')
 
 const loading = computed(() => status.value === 'pending')
 const showFloatingSearch = ref(false)
@@ -22,18 +60,23 @@ function isNew(t) {
 }
 
 const recherche = ref('')
-const zoneFiltre = ref('all')
+const lieuFiltre = ref('all')
 
-const zones = computed(() => {
+const lieuxRecents = computed(() => {
   if (!terrains.value) return []
-  const set = new Set(terrains.value.map(t => t.zone).filter(Boolean))
-  return Array.from(set).sort()
+  const seen = new Set()
+  const sorted = [...terrains.value].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+  return sorted.filter(t => {
+    if (!t.lieu || seen.has(t.lieu)) return false
+    seen.add(t.lieu)
+    return true
+  }).slice(0, 7).map(t => t.lieu)
 })
 
 const items = computed(() => {
   if (error.value || !terrains.value) return []
   const q = recherche.value.toLowerCase().trim()
-  let result = terrains.value
+  let result = [...terrains.value]
   if (q) {
     result = result.filter(t =>
       (t.lieu || '').toLowerCase().includes(q) ||
@@ -43,17 +86,26 @@ const items = computed(() => {
       (t.prix || '').toLowerCase().includes(q)
     )
   }
-  if (zoneFiltre.value !== 'all') {
-    result = result.filter(t => t.zone === zoneFiltre.value)
+  if (lieuFiltre.value !== 'all') {
+    result = result.filter(t => t.lieu === lieuFiltre.value)
   }
   result.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
   return result
+})
+
+const totalCatPages = computed(() => Math.max(1, Math.ceil(items.value.length / perPage)))
+
+const catItems = computed(() => {
+  const start = (catPage.value - 1) * perPage
+  return items.value.slice(start, start + perPage)
 })
 
 const inView = reactive(new Set())
 let observer = null
 const currentIndex = ref({})
 const timers = ref({})
+const catPage = ref(1)
+const perPage = 9
 
 const cardImages = computed(() => {
   return (t) => (t.images || []).filter(img => img.type !== 'video')
@@ -78,6 +130,8 @@ function stopCarousel(id) {
     delete timers.value[id]
   }
 }
+
+watch([recherche, lieuFiltre], () => { catPage.value = 1 })
 
 onMounted(() => {
   const onScroll = () => {
@@ -169,17 +223,17 @@ function observeCard(el, i) {
           </div>
           <div class="flex gap-2 overflow-x-auto -mx-1 px-1 pb-1 sm:overflow-visible sm:pb-0 sm:mx-0 sm:px-0">
             <button
-              @click="zoneFiltre = 'all'"
+              @click="lieuFiltre = 'all'"
               class="whitespace-nowrap px-3.5 sm:px-4 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-colors"
-              :class="zoneFiltre === 'all' ? 'bg-navy text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'"
+              :class="lieuFiltre === 'all' ? 'bg-navy text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'"
             >Tous</button>
             <button
-              v-for="z in zones"
-              :key="z"
-              @click="zoneFiltre = z"
+              v-for="l in lieuxRecents"
+              :key="l"
+              @click="lieuFiltre = l"
               class="whitespace-nowrap px-3.5 sm:px-4 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-colors"
-              :class="zoneFiltre === z ? 'bg-navy text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'"
-            >{{ z }}</button>
+              :class="lieuFiltre === l ? 'bg-navy text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'"
+            >{{ l }}</button>
           </div>
         </div>
       </div>
@@ -202,23 +256,23 @@ function observeCard(el, i) {
             </div>
             <div class="flex gap-2 overflow-x-auto -mx-1 px-1 pb-1 sm:overflow-visible sm:pb-0 sm:mx-0 sm:px-0">
               <button
-                @click="zoneFiltre = 'all'"
+                @click="lieuFiltre = 'all'"
                 class="whitespace-nowrap px-3.5 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-colors"
-                :class="zoneFiltre === 'all' ? 'bg-navy text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'"
+                :class="lieuFiltre === 'all' ? 'bg-navy text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'"
               >Tous</button>
               <button
-                v-for="z in zones"
-                :key="z"
-                @click="zoneFiltre = z"
+                v-for="l in lieuxRecents"
+                :key="l"
+                @click="lieuFiltre = l"
                 class="whitespace-nowrap px-3.5 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-colors"
-                :class="zoneFiltre === z ? 'bg-navy text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'"
-              >{{ z }}</button>
+                :class="lieuFiltre === l ? 'bg-navy text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'"
+              >{{ l }}</button>
             </div>
           </div>
         </div>
 
         <div v-if="loading" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
-          <div v-for="n in 6" :key="n" class="bg-white rounded-xl border border-gray-100 shadow-soft overflow-hidden">
+          <div v-for="n in 9" :key="n" class="bg-white rounded-xl border border-gray-100 shadow-soft overflow-hidden">
             <div class="skeleton h-44 md:h-48 rounded-none"></div>
             <div class="p-5 space-y-3">
               <div class="skeleton h-5 w-2/3"></div>
@@ -229,13 +283,13 @@ function observeCard(el, i) {
           </div>
         </div>
 
-        <div v-else-if="items.length === 0 && !recherche" class="text-center py-16 animate-on-scroll">
+        <div v-else-if="items.length === 0 && !recherche && !loading" class="text-center py-16 animate-on-scroll">
           <p class="text-gray-500 text-lg mb-3">Aucun terrain disponible pour le moment</p>
           <p class="text-gray-500 text-sm mb-6">Revenez bientôt ou contactez-nous pour plus d'informations.</p>
           <NuxtLink to="/contact" class="btn-cta">Nous contacter</NuxtLink>
         </div>
 
-        <div v-else-if="items.length === 0 && recherche" class="text-center py-16 animate-on-scroll">
+        <div v-else-if="items.length === 0 && recherche && !loading" class="text-center py-16 animate-on-scroll">
           <div class="w-16 h-16 rounded-2xl bg-gray-50 flex items-center justify-center mx-auto mb-4">
             <svg class="w-7 h-7 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg>
           </div>
@@ -246,7 +300,7 @@ function observeCard(el, i) {
 
         <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 max-w-6xl mx-auto">
           <div
-            v-for="(t, i) in items"
+            v-for="(t, i) in catItems"
             :key="t.id"
             :ref="el => { if (el) observeCard(el, i) }"
             class="card-3d-grid"
@@ -259,12 +313,11 @@ function observeCard(el, i) {
               @mouseleave="stopCarousel(t.id)"
               class="block bg-white rounded-xl border border-gray-100 shadow-soft overflow-hidden hover:shadow-card group cursor-pointer"
             >
-              <div class="relative overflow-hidden h-44 md:h-48 bg-gray-100">
-                <NuxtImg
-                  :src="cardImages(t)[getCurrentIndex(t)]?.url"
+              <div class="relative overflow-hidden h-36 md:h-48 bg-gray-100">
+                <img
+                  :src="cardImages(t)[getCurrentIndex(t)]?.url || `https://placehold.co/600x400/0B1B3D/F5A623?text=Terrain+${encodeURIComponent(t.lieu)}`"
                   :alt="`Terrain à ${t.lieu}`"
                   loading="lazy"
-                  unoptimized
                   width="600" height="400"
                   class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
@@ -291,6 +344,7 @@ function observeCard(el, i) {
                 <button
                   v-if="cardImages(t).length > 1"
                   @click="prevImage(t, $event)"
+                  aria-label="Image précédente"
                   class="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/80 hover:bg-white flex items-center justify-center shadow-sm transition-all opacity-0 group-hover:opacity-100"
                 >
                   <svg class="w-3.5 h-3.5 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
@@ -298,6 +352,7 @@ function observeCard(el, i) {
                 <button
                   v-if="cardImages(t).length > 1"
                   @click="nextImage(t, $event)"
+                  aria-label="Image suivante"
                   class="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/80 hover:bg-white flex items-center justify-center shadow-sm transition-all opacity-0 group-hover:opacity-100"
                 >
                   <svg class="w-3.5 h-3.5 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
@@ -307,22 +362,24 @@ function observeCard(el, i) {
                   v-if="cardImages(t).length > 1"
                   class="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1"
                 >
-                  <span
+                  <button
                     v-for="(_, di) in cardImages(t)"
                     :key="di"
+                    @click="goToImage(t, di, $event)"
+                    :aria-label="`Aller à l'image ${di + 1}`"
                     class="w-1.5 h-1.5 rounded-full transition-all"
                     :class="di === getCurrentIndex(t) ? 'bg-white' : 'bg-white/40'"
-                  ></span>
+                  ></button>
                 </div>
               </div>
 
-              <div class="p-5">
-                <h3 class="text-lg font-heading font-semibold text-navy mb-1 group-hover:text-gold transition-colors">{{ t.lieu }}</h3>
-                <p class="text-sm text-gray-500 mb-2">{{ t.quartier }}</p>
-                <p class="text-xs text-gray-500 uppercase tracking-wider mb-3">{{ t.superficie }}</p>
-                <p v-if="t.zone" class="text-xs text-gray-400 mb-1">Zone : {{ t.zone }}</p>
-                <p class="text-gold font-heading font-semibold text-base mb-4">{{ t.prix }}</p>
-                <span class="btn-detail inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-navy text-white text-sm font-semibold transition-all duration-300 group-hover:bg-gold group-hover:text-navy">
+              <div class="p-3 md:p-5">
+                <h3 class="text-sm md:text-lg font-heading font-semibold text-navy mb-0.5 md:mb-1 group-hover:text-gold transition-colors">{{ t.lieu }}</h3>
+                <p class="text-[11px] md:text-sm text-gray-500 mb-0.5 md:mb-2">{{ t.quartier }}</p>
+                <p class="text-[11px] md:text-xs text-gray-500 uppercase tracking-wider mb-1 md:mb-3">{{ t.superficie }}</p>
+                <p v-if="t.zone" class="text-[11px] md:text-xs text-gray-400 mb-0.5 md:mb-1">Zone : {{ t.zone }}</p>
+                <p class="text-gold font-heading font-semibold text-xs md:text-base mb-2 md:mb-4">{{ t.prix }}</p>
+                <span class="btn-detail inline-flex items-center gap-1.5 md:gap-2 px-3 py-1.5 md:px-5 md:py-2.5 rounded-xl bg-navy text-white text-[11px] md:text-sm font-semibold transition-all duration-300 group-hover:bg-gold group-hover:text-navy">
                   <span>Détails</span>
                   <span class="flex items-center justify-center w-5 h-5 rounded-full bg-white/20 group-hover:bg-navy/20 transition-all duration-300">
                     <svg class="w-3 h-3 transition-transform duration-300 group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
@@ -335,7 +392,38 @@ function observeCard(el, i) {
           </div>
         </div>
 
-        <div class="text-center mt-12 animate-on-scroll">
+        <div v-if="totalCatPages > 1" class="flex items-center justify-center gap-3 mt-10 md:mt-12 animate-on-scroll">
+          <button
+            :disabled="catPage <= 1"
+            @click="catPage = Math.max(1, catPage - 1)"
+            aria-label="Page précédente"
+            class="inline-flex items-center justify-center w-10 h-10 rounded-xl border border-gray-200 text-gray-500 hover:border-navy hover:text-navy transition-all disabled:opacity-30 disabled:pointer-events-none"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+          </button>
+
+          <button
+            v-for="p in totalCatPages"
+            :key="p"
+            @click="catPage = p"
+            :aria-label="`Aller à la page ${p}`"
+            class="inline-flex items-center justify-center w-10 h-10 rounded-xl text-sm font-semibold cursor-pointer transition-all"
+            :class="p === catPage ? 'bg-navy text-white shadow-sm' : 'text-gray-500 hover:bg-gray-50'"
+          >
+            {{ p }}
+          </button>
+
+          <button
+            :disabled="catPage >= totalCatPages"
+            @click="catPage = Math.min(totalCatPages, catPage + 1)"
+            aria-label="Page suivante"
+            class="inline-flex items-center justify-center w-10 h-10 rounded-xl border border-gray-200 text-gray-500 hover:border-navy hover:text-navy transition-all disabled:opacity-30 disabled:pointer-events-none"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+
+        <div class="text-center mt-8 md:mt-10 animate-on-scroll">
           <p class="text-gray-500 text-sm mb-4">Vous ne trouvez pas ce que vous cherchez ?</p>
           <NuxtLink to="/contact" class="btn-cta">
             Contactez-nous

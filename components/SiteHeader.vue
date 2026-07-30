@@ -93,16 +93,17 @@ onUnmounted(() => {
           leave-to-class="max-h-0 opacity-0"
         >
           <div v-if="mobileMenuOpen" class="md:hidden border-t border-gray-100 py-3 space-y-1">
-            <button
+            <NuxtLink
               v-for="tab in tabs"
               :key="tab.to"
-              @click="navigateTo(tab.to); mobileMenuOpen = false"
+              :to="tab.to"
+              @click="mobileMenuOpen = false"
               class="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm font-medium transition-colors"
               :class="isActive(tab) ? 'bg-navy/10 text-navy' : 'text-gray-500 hover:text-navy hover:bg-navy/5'"
             >
               <Icon :name="tab.icon" class="w-5 h-5" />
               {{ tab.label }}
-            </button>
+            </NuxtLink>
             <a
               href="tel:0708342144"
               class="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm font-medium text-gray-500 hover:text-navy hover:bg-navy/5 transition-colors"
