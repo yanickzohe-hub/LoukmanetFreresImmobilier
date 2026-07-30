@@ -20,8 +20,9 @@ async function submitForm() {
     show('Votre avis a été soumis et sera publié après modération.')
     form.value = { nom: '', message: '', etoiles: 5, contact: '' }
     setTimeout(() => { sent.value = false }, 5000)
-  } catch (err: any) {
-    error.value = err?.data?.statusMessage || 'Une erreur est survenue. Veuillez réessayer.'
+  } catch (err: unknown) {
+    const e = err as { data?: { statusMessage?: string } }
+    error.value = e?.data?.statusMessage || 'Une erreur est survenue. Veuillez réessayer.'
   } finally {
     loading.value = false
   }

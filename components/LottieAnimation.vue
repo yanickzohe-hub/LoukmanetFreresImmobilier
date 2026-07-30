@@ -1,7 +1,7 @@
 <script setup>
 import { Vue3Lottie } from 'vue3-lottie'
 
-const props = defineProps({
+defineProps({
   animationData: { type: Object, required: true },
   loop: { type: Boolean, default: true },
   autoPlay: { type: Boolean, default: true },

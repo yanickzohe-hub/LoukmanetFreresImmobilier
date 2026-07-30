@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import prisma from '../../utils/prisma'
 
-const JWT_SECRET = process.env.JWT_SECRET || 'super-secret-key-change-in-production'
+const JWT_SECRET = process.env.JWT_SECRET
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)

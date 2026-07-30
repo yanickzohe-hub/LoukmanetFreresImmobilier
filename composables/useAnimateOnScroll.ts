@@ -1,7 +1,7 @@
 import { onMounted, onUnmounted, nextTick } from 'vue'
 
 export function useAnimateOnScroll() {
-  if (process.server) return
+  if (import.meta.server) return
 
   let observer = null
 

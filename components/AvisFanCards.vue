@@ -16,23 +16,6 @@ const hoveredIndex = ref<number | null>(null)
 const MAX_VISIBLE = 5
 const HALF = 2
 
-function getFanPositions(total: number, centerOffset: number) {
-  const count = Math.min(total, MAX_VISIBLE)
-  const offset = 0
-  const positions: { rot: number; scale: number; x: number; zIndex: number }[] = []
-  for (let i = 0; i < count; i++) {
-    const dist = i - HALF + centerOffset - centerOffset
-    const factor = dist / HALF
-    positions.push({
-      rot: factor * 15,
-      scale: 1 - 0.15 * Math.abs(factor),
-      x: factor * 22,
-      zIndex: count - Math.abs(i - HALF),
-    })
-  }
-  return positions
-}
-
 function getSlotConfig(slot: number) {
   const count = Math.min(totalCards.value, MAX_VISIBLE)
   const center = count >> 1

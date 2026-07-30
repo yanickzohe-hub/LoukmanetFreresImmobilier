@@ -4,7 +4,7 @@ const config = useRuntimeConfig()
 const siteUrl = config.public.siteUrl || 'https://loukman-immobilier.com'
 const id = Number(route.params.id)
 
-const { data: terrain, pending, error } = await useFetch(`/api/terrains/${id}`)
+const { data: terrain } = await useFetch(`/api/terrains/${id}`)
 
 const currentImage = ref(0)
 const lightboxOpen = ref(false)

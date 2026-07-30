@@ -7,7 +7,9 @@ definePageMeta({
 const { $api } = useNuxtApp()
 const { show } = useToast()
 
-const avis = ref<any[]>([])
+interface AvisItem { id: number; nom: string; message: string; etoiles: number; contact: string | null; statut: string; createdAt: string }
+
+const avis = ref<AvisItem[]>([])
 const loading = ref(true)
 const editingId = ref<number | null>(null)
 const editForm = ref({ nom: '', message: '', etoiles: 5, contact: '', statut: 'en_attente' })
@@ -51,7 +53,7 @@ async function supprimer(id: number) {
   }
 }
 
-function startEdit(a: any) {
+function startEdit(a: AvisItem) {
   editingId.value = a.id
   editForm.value = { nom: a.nom, message: a.message, etoiles: a.etoiles, contact: a.contact || '', statut: a.statut }
 }

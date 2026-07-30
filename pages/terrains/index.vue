@@ -51,9 +51,8 @@ useAnimateOnScroll()
 
 const loading = computed(() => status.value === 'pending')
 const showFloatingSearch = ref(false)
-const searchBarRef = ref(null)
 
-function isNew(t) {
+function isNew(t: { createdAt?: string }) {
   if (!t.createdAt) return false
   const diff = Date.now() - new Date(t.createdAt).getTime()
   return diff < 7 * 24 * 60 * 60 * 1000

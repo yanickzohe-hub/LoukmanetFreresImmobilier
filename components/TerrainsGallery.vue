@@ -4,7 +4,6 @@ useAnimateOnScroll()
 const { data: terrains, status, error } = useFetch('/api/terrains', { key: 'gallery-terrains' })
 
 const loading = computed(() => status.value === 'pending')
-const hasItems = computed(() => !error.value && terrains.value && terrains.value.length > 0)
 
 const page = ref(1)
 const perPage = 3

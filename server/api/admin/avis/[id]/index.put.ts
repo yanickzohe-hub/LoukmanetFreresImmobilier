@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 404, statusMessage: 'Avis non trouvé' })
   }
 
-  const data: any = {}
+  const data: Record<string, unknown> = {}
   if (body.nom !== undefined) data.nom = body.nom
   if (body.message !== undefined) data.message = body.message
   if (body.etoiles !== undefined) data.etoiles = Math.min(5, Math.max(1, parseInt(body.etoiles, 10)))

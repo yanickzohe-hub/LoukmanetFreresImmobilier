@@ -72,6 +72,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     emailHost: '',
+    emailPort: '',
     emailUser: '',
     emailPass: '',
     emailTo: 'loukmanfreresimmobilier@gmail.com',
