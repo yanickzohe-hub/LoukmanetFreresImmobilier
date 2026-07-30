@@ -87,7 +87,7 @@ const blocs = [
                 à offrir un service sérieux, transparent et de proximité.
               </p>
               <p class="text-sm text-gray-500 pt-4 border-t border-gray-100">
-                Capital de 1 000 000 FCFA — RCCM : CI-ABJ-2012-B-XXXXX
+                Capital de 1 000 000 FCFA — RC-CI-GRDBSM-2023-B-3985 - SIS 19 BP 36 ABIDJAN 19
               </p>
             </div>
           </div>
