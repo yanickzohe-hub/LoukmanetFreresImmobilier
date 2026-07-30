@@ -66,7 +66,7 @@ export default defineNuxtConfig({
   nitro: {
     preset: 'vercel',
     experimental: {
-      bodySizeLimit: 50 * 1024 * 1024
+      bodySizeLimit: 15 * 1024 * 1024
     }
   },
 

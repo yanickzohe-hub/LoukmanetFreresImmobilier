@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer'
+import { checkRateLimit } from '../utils/ratelimit'
 
 function escapeHtml(text) {
   if (!text) return ''
@@ -6,6 +7,9 @@ function escapeHtml(text) {
 }
 
 export default defineEventHandler(async (event) => {
+  const ip = getHeader(event, 'x-forwarded-for') || event.node.req.socket.remoteAddress || 'unknown'
+  checkRateLimit(`contact:${ip}`, 3, 60 * 60 * 1000)
+
   const body = await readBody(event)
   const { nom, telephone, projet, message } = body
 

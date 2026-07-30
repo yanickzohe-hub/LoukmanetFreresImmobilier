@@ -1,6 +1,9 @@
 import jwt from 'jsonwebtoken'
 
-const JWT_SECRET = process.env.JWT_SECRET || 'super-secret-key-change-in-production'
+const JWT_SECRET = process.env.JWT_SECRET
+if (!JWT_SECRET) {
+  throw new Error('JWT_SECRET environnement manquant')
+}
 
 export default defineEventHandler((event) => {
   const path = event.path
@@ -17,7 +20,7 @@ export default defineEventHandler((event) => {
   const token = authHeader.slice(7)
 
   try {
-    const decoded = jwt.verify(token, JWT_SECRET) as { id: number; email: string }
+    const decoded = jwt.verify(token, JWT_SECRET, { algorithms: ['HS256'] }) as { id: number; email: string }
     event.context.adminId = decoded.id
     event.context.adminEmail = decoded.email
   } catch {
