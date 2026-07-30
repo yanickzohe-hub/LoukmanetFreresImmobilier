@@ -1,7 +1,7 @@
 <script setup>
 useAnimateOnScroll()
 
-const { data: terrains, status, error } = useFetch('/api/terrains', { key: 'gallery-terrains' })
+const { data: terrains, status, error } = useFetch('/api/terrains', { key: 'gallery-terrains', server: false })
 
 const loading = computed(() => status.value === 'pending')
 
