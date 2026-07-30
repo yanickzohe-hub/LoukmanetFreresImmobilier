@@ -1,7 +1,7 @@
 <script setup>
 const route = useRoute()
 const config = useRuntimeConfig()
-const siteUrl = config.public.siteUrl || 'https://loukman-immobilier.ci'
+const siteUrl = config.public.siteUrl || 'https://loukman-immobilier.com'
 const id = Number(route.params.id)
 
 const { data: terrain, pending, error } = await useFetch(`/api/terrains/${id}`)
@@ -153,7 +153,7 @@ useHead(() => {
             Retour aux terrains
           </NuxtLink>
 
-          <div class="grid lg:grid-cols-2 gap-8 md:gap-10 items-start">
+          <div class="grid lg:grid-cols-2 gap-6 md:gap-10 items-start">
             <div class="space-y-3">
               <div class="relative overflow-hidden rounded-xl bg-gray-100 shadow-soft aspect-[4/3]">
                 <video
@@ -164,9 +164,9 @@ useHead(() => {
                   playsinline
                   preload="metadata"
                 ></video>
-                <NuxtImg
+                <img
                   v-else
-                  :src="images[currentImage]?.url"
+                  :src="images[currentImage]?.url || `https://placehold.co/800x500/0B1B3D/F5A623?text=Terrain+${encodeURIComponent(terrain.lieu)}`"
                   :alt="`Terrain à ${terrain.lieu} - ${terrain.quartier}`"
                   class="w-full h-full object-cover cursor-pointer"
                   width="800" height="500"
@@ -183,10 +183,11 @@ useHead(() => {
                   :key="i"
                   type="button"
                   @click="currentImage = i"
+                  :aria-label="`Voir la photo ${i + 1}`"
                   class="w-20 h-16 shrink-0 rounded-lg overflow-hidden border-2 transition-all relative"
                   :class="currentImage === i ? 'border-gold ring-2 ring-gold/30' : 'border-transparent opacity-60 hover:opacity-100'"
                 >
-                  <NuxtImg v-if="media.type !== 'video'" :src="media.url" :alt="`Photo ${i + 1}`" class="w-full h-full object-cover" width="80" height="64" />
+                  <img v-if="media.type !== 'video'" :src="media.url" :alt="`Photo ${i + 1}`" class="w-full h-full object-cover" width="80" height="64" />
                   <template v-else>
                     <div class="w-full h-full bg-gray-800 flex items-center justify-center">
                       <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
@@ -196,47 +197,47 @@ useHead(() => {
               </div>
             </div>
 
-            <aside class="bg-white rounded-xl border border-gray-100 shadow-soft p-5 md:p-7 lg:sticky lg:top-28">
-              <p class="text-xs font-semibold uppercase tracking-widest text-gold mb-2">Fiche terrain</p>
-              <h1 class="text-2xl md:text-4xl font-bold text-navy mb-2">Terrain à {{ terrain.lieu }}</h1>
-              <p class="text-gray-500 mb-5">{{ terrain.quartier }}</p>
+            <aside class="bg-white rounded-xl border border-gray-100 shadow-soft p-4 md:p-7 lg:sticky lg:top-28">
+              <p class="text-[11px] md:text-xs font-semibold uppercase tracking-widest text-gold mb-1 md:mb-2">Fiche terrain</p>
+              <h1 class="text-xl md:text-4xl font-bold text-navy mb-1 md:mb-2">Terrain à {{ terrain.lieu }}</h1>
+              <p class="text-gray-500 text-sm md:text-base mb-4 md:mb-5">{{ terrain.quartier }}</p>
 
-              <p class="text-gold font-heading font-bold text-2xl md:text-3xl mb-5">{{ terrain.prix }}</p>
+              <p class="text-gold font-heading font-bold text-xl md:text-3xl mb-4 md:mb-5">{{ terrain.prix }}</p>
 
-              <div class="grid grid-cols-2 gap-3 mb-6">
-                <div class="rounded-lg bg-gray-50 p-4">
-                  <p class="text-xs text-gray-500 uppercase tracking-wider mb-1">Superficie</p>
-                  <p class="font-semibold text-navy">{{ terrain.superficie }}</p>
+              <div class="grid grid-cols-2 gap-2 md:gap-3 mb-5 md:mb-6">
+                <div class="rounded-lg bg-gray-50 p-3 md:p-4">
+                  <p class="text-[11px] md:text-xs text-gray-500 uppercase tracking-wider mb-0.5 md:mb-1">Superficie</p>
+                  <p class="font-semibold text-navy text-xs md:text-base">{{ terrain.superficie }}</p>
                 </div>
-                <div class="rounded-lg bg-gray-50 p-4">
-                  <p class="text-xs text-gray-500 uppercase tracking-wider mb-1">Statut</p>
-                  <p class="font-semibold" :class="terrain.statut === 'Disponible' ? 'text-green-600' : 'text-gray-600'">
+                <div class="rounded-lg bg-gray-50 p-3 md:p-4">
+                  <p class="text-[11px] md:text-xs text-gray-500 uppercase tracking-wider mb-0.5 md:mb-1">Statut</p>
+                  <p class="font-semibold text-xs md:text-base" :class="terrain.statut === 'Disponible' ? 'text-green-600' : 'text-gray-600'">
                     {{ terrain.statut }}
                   </p>
                 </div>
-                <div class="rounded-lg bg-gray-50 p-4">
-                  <p class="text-xs text-gray-500 uppercase tracking-wider mb-1">Lieu</p>
-                  <p class="font-semibold text-navy">{{ terrain.lieu }}</p>
+                <div class="rounded-lg bg-gray-50 p-3 md:p-4">
+                  <p class="text-[11px] md:text-xs text-gray-500 uppercase tracking-wider mb-0.5 md:mb-1">Lieu</p>
+                  <p class="font-semibold text-navy text-xs md:text-base">{{ terrain.lieu }}</p>
                 </div>
-                <div class="rounded-lg bg-gray-50 p-4">
-                  <p class="text-xs text-gray-500 uppercase tracking-wider mb-1">Quartier</p>
-                  <p class="font-semibold text-navy">{{ terrain.quartier }}</p>
+                <div class="rounded-lg bg-gray-50 p-3 md:p-4">
+                  <p class="text-[11px] md:text-xs text-gray-500 uppercase tracking-wider mb-0.5 md:mb-1">Quartier</p>
+                  <p class="font-semibold text-navy text-xs md:text-base">{{ terrain.quartier }}</p>
                 </div>
-                <div v-if="terrain.zone" class="rounded-lg bg-gray-50 p-4">
-                  <p class="text-xs text-gray-500 uppercase tracking-wider mb-1">Zone</p>
-                  <p class="font-semibold text-navy">{{ terrain.zone }}</p>
+                <div v-if="terrain.zone" class="rounded-lg bg-gray-50 p-3 md:p-4">
+                  <p class="text-[11px] md:text-xs text-gray-500 uppercase tracking-wider mb-0.5 md:mb-1">Zone</p>
+                  <p class="font-semibold text-navy text-xs md:text-base">{{ terrain.zone }}</p>
                 </div>
               </div>
 
-              <div class="space-y-3">
+              <div class="space-y-2 md:space-y-3">
                 <a
                   :href="acheterUrl"
                   target="_blank"
                   rel="noopener"
-                  class="inline-flex items-center justify-center gap-2 w-full px-6 py-3.5 rounded-xl text-sm font-bold text-white transition-all duration-300 active:scale-[0.98]"
+                  class="inline-flex items-center justify-center gap-2 w-full px-4 md:px-6 py-3 md:py-3.5 rounded-xl text-xs md:text-sm font-bold text-white transition-all duration-300 active:scale-[0.98]"
                   :class="terrain.statut === 'Disponible' ? 'bg-green-600 hover:bg-green-700 shadow-lg shadow-green-600/25' : 'bg-gray-400 pointer-events-none'"
                 >
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                  <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m0 0v-1.5c0-.621-.504-1.125-1.125-1.125H12m6.75 5.25l.75 1.5M7.5 15l1.5-3m3 3l1.5-1.5M10.5 12l1.5 1.5" />
                   </svg>
                   Acheter ce terrain
@@ -260,8 +261,8 @@ useHead(() => {
         <div class="max-w-6xl mx-auto grid lg:grid-cols-3 gap-6 md:gap-8">
           <div class="lg:col-span-2 space-y-6">
             <div class="card">
-              <h2 class="text-lg md:text-xl font-semibold text-navy mb-3">Détails du terrain</h2>
-              <p class="text-gray-600 text-sm md:text-base leading-relaxed whitespace-pre-line">
+              <h2 class="text-base md:text-xl font-semibold text-navy mb-2 md:mb-3">Détails du terrain</h2>
+              <p class="text-gray-600 text-xs md:text-base leading-relaxed whitespace-pre-line">
                 {{ terrain.description || 'Contactez-nous pour recevoir les informations complètes sur ce terrain.' }}
               </p>
             </div>
@@ -270,8 +271,8 @@ useHead(() => {
           </div>
 
           <div class="card h-fit">
-            <h2 class="text-lg md:text-xl font-semibold text-navy mb-4">Résumé</h2>
-            <div class="space-y-3 text-sm">
+            <h2 class="text-base md:text-xl font-semibold text-navy mb-3 md:mb-4">Résumé</h2>
+            <div class="space-y-2 md:space-y-3 text-xs md:text-sm">
               <div class="flex justify-between gap-4">
                 <span class="text-gray-500">Localisation</span>
                 <span class="font-semibold text-navy text-right">{{ terrain.lieu }}</span>
@@ -326,7 +327,7 @@ useHead(() => {
           <div class="flex items-end justify-between gap-4 mb-8">
             <div>
               <span class="inline-block text-xs font-semibold uppercase tracking-widest text-gold mb-2">Offres similaires</span>
-              <h2 class="text-2xl md:text-3xl font-bold text-navy">Terrains similaires</h2>
+              <h2 class="text-lg md:text-3xl font-bold text-navy">Terrains similaires</h2>
             </div>
             <NuxtLink to="/terrains" class="hidden sm:inline-flex items-center gap-2 text-sm font-semibold text-navy hover:text-gold transition-colors shrink-0">
               Voir tous les terrains
@@ -343,9 +344,9 @@ useHead(() => {
               :to="`/terrains/${s.id}`"
               class="group block bg-white rounded-xl border border-gray-100 shadow-soft overflow-hidden hover:shadow-card transition-all duration-300 hover:-translate-y-0.5"
             >
-              <div class="relative h-44 overflow-hidden bg-gray-100">
-                <NuxtImg
-                  :src="(s.images?.filter(img => img.type !== 'video')?.[0]?.url) || `https://placehold.co/600x400/0B1B3D/F5A623?text=Terrain+${s.lieu}`"
+              <div class="relative h-36 md:h-44 overflow-hidden bg-gray-100">
+                <img
+                  :src="(s.images?.filter(img => img.type !== 'video')?.[0]?.url) || `https://placehold.co/600x400/0B1B3D/F5A623?text=Terrain+${encodeURIComponent(s.lieu)}`"
                   :alt="`Terrain à ${s.lieu}`"
                   class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   loading="lazy"
@@ -355,14 +356,14 @@ useHead(() => {
                   {{ s.statut }}
                 </span>
               </div>
-              <div class="p-5">
-                <div class="flex items-center gap-2 text-xs text-gold font-mono font-semibold mb-1">
+              <div class="p-3 md:p-5">
+                <div class="flex items-center gap-1.5 md:gap-2 text-[10px] md:text-xs text-gold font-mono font-semibold mb-0.5 md:mb-1">
                   <span>LOT-{{ String(s.id).padStart(3, '0') }}</span>
                 </div>
-                <h3 class="text-base font-heading font-semibold text-navy mb-1">{{ s.lieu }}</h3>
-                <p class="text-xs text-gray-500 mb-1">{{ s.quartier }}</p>
-                <p class="text-xs text-gray-400 uppercase tracking-wider mb-2">{{ s.superficie }}</p>
-                <p class="text-gold font-heading font-semibold text-sm mb-3">{{ s.prix }}</p>
+                <h3 class="text-sm md:text-base font-heading font-semibold text-navy mb-0.5 md:mb-1">{{ s.lieu }}</h3>
+                <p class="text-[11px] md:text-xs text-gray-500 mb-0.5 md:mb-1">{{ s.quartier }}</p>
+                <p class="text-[11px] md:text-xs text-gray-400 uppercase tracking-wider mb-1 md:mb-2">{{ s.superficie }}</p>
+                <p class="text-gold font-heading font-semibold text-xs md:text-sm mb-2 md:mb-3">{{ s.prix }}</p>
                 <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-navy group-hover:text-gold transition-colors">
                   Voir le détail
                   <svg class="w-3 h-3 transition-transform duration-300 group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
@@ -385,11 +386,11 @@ useHead(() => {
         tabindex="0"
         ref="lightboxRef"
       >
-        <button @click.stop="closeLightbox" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-all z-10">
+        <button @click.stop="closeLightbox" aria-label="Fermer la galerie" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-all z-10">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
 
-        <button v-if="images.length > 1" @click.stop="prevLightbox" class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-all">
+        <button v-if="images.length > 1" @click.stop="prevLightbox" aria-label="Photo précédente" class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-all">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
         </button>
 
@@ -402,7 +403,7 @@ useHead(() => {
             playsinline
             autoplay
           ></video>
-          <NuxtImg
+          <img
             v-else
             :src="images[lightboxIndex]?.url"
             :alt="`Photo ${lightboxIndex + 1}`"
@@ -410,7 +411,7 @@ useHead(() => {
           />
         </div>
 
-        <button v-if="images.length > 1" @click.stop="nextLightbox" class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-all">
+        <button v-if="images.length > 1" @click.stop="nextLightbox" aria-label="Photo suivante" class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-all">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </button>
 

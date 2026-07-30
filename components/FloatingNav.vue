@@ -10,40 +10,6 @@ const links = [
   { path: 'tel:0708342144', label: 'Appeler', icon: 'M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z' },
 ]
 
-const sectionIds = {
-  '/services': 'services',
-  '/a-propos': 'a-propos',
-  '/contact': 'contact',
-}
-
-function handleNav(link) {
-  if (link.path.startsWith('tel:')) {
-    window.location.href = link.path
-    return
-  }
-
-  if (link.path === '/') {
-    if (route.path === '/') {
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-      return
-    }
-    navigateTo('/')
-    return
-  }
-
-  const sectionId = sectionIds[link.path]
-
-  if (route.path === '/' && sectionId) {
-    const el = document.getElementById(sectionId)
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      return
-    }
-  }
-
-  navigateTo(link.path)
-}
-
 function isActive(p) {
   if (p === '/') return route.path === '/' && !route.hash
   return route.path.startsWith(p)
@@ -53,25 +19,44 @@ function isActive(p) {
 <template>
   <div class="fixed bottom-0 left-0 right-0 z-50 flex justify-center pb-3 md:pb-5 pointer-events-none md:hidden">
     <nav class="pointer-events-auto flex items-center gap-1 md:gap-1.5 px-3 md:px-5 py-2 md:py-3 rounded-2xl md:rounded-3xl bg-white/95 backdrop-blur-lg border border-gray-200 shadow-2xl shadow-navy/10">
-      <div
-        v-for="link in links"
-        :key="link.path"
-        @click="handleNav(link)"
-        class="group relative flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-xl transition-all duration-300 cursor-pointer shrink-0"
-        :class="isActive(link.path) ? 'text-navy bg-navy/10 scale-110' : 'text-gray-400 hover:text-navy hover:bg-navy/5'"
-      >
-        <svg
-          class="w-5 h-5 md:w-6 md:h-6 transition-all duration-300 group-hover:scale-110"
-          fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-          viewBox="0 0 24 24"
+      <template v-for="link in links" :key="link.path">
+        <a
+          v-if="link.path.startsWith('tel:')"
+          :href="link.path"
+          class="group relative flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-xl transition-all duration-300 cursor-pointer shrink-0 text-gray-400 hover:text-navy hover:bg-navy/5"
         >
-          <path :d="link.icon"/>
-        </svg>
+          <svg
+            class="w-5 h-5 md:w-6 md:h-6 transition-all duration-300 group-hover:scale-110"
+            fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+            viewBox="0 0 24 24"
+          >
+            <path :d="link.icon"/>
+          </svg>
 
-        <span class="absolute -top-10 left-1/2 -translate-x-1/2 px-3.5 py-1.5 text-xs font-medium whitespace-nowrap rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-200 translate-y-1 group-hover:translate-y-0 bg-navy text-white border border-white/10 shadow-lg pointer-events-none w-max max-w-[140px] overflow-hidden text-ellipsis">
-          {{ link.label }}
-        </span>
-      </div>
+          <span class="absolute -top-10 left-1/2 -translate-x-1/2 px-3.5 py-1.5 text-xs font-medium whitespace-nowrap rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-200 translate-y-1 group-hover:translate-y-0 bg-navy text-white border border-white/10 shadow-lg pointer-events-none w-max max-w-[140px] overflow-hidden text-ellipsis">
+            {{ link.label }}
+          </span>
+        </a>
+
+        <NuxtLink
+          v-else
+          :to="link.path"
+          class="group relative flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-xl transition-all duration-300 cursor-pointer shrink-0"
+          :class="isActive(link.path) ? 'text-navy bg-navy/10 scale-110' : 'text-gray-400 hover:text-navy hover:bg-navy/5'"
+        >
+          <svg
+            class="w-5 h-5 md:w-6 md:h-6 transition-all duration-300 group-hover:scale-110"
+            fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+            viewBox="0 0 24 24"
+          >
+            <path :d="link.icon"/>
+          </svg>
+
+          <span class="absolute -top-10 left-1/2 -translate-x-1/2 px-3.5 py-1.5 text-xs font-medium whitespace-nowrap rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-200 translate-y-1 group-hover:translate-y-0 bg-navy text-white border border-white/10 shadow-lg pointer-events-none w-max max-w-[140px] overflow-hidden text-ellipsis">
+            {{ link.label }}
+          </span>
+        </NuxtLink>
+      </template>
     </nav>
   </div>
 </template>

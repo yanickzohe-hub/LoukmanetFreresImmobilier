@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin/
 Disallow: /api/
 
-Sitemap: https://loukman-immobilier.vercel.app/sitemap.xml
+Sitemap: https://loukman-immobilier.com/sitemap.xml

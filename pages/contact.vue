@@ -1,10 +1,43 @@
 <script setup>
+const config = useRuntimeConfig()
+const siteUrl = config.public.siteUrl || 'https://loukman-immobilier.com'
+
 useHead({
   title: 'Contact | Loukman & Frères Immobilier',
   meta: [
     { name: 'description', content: 'Contactez Loukman & Frères Immobilier — intervention dans tout le Sud-Comoé, à Yamoussoukro et partout en Côte d\'Ivoire. Téléphone, email ou formulaire en ligne.' },
     { name: 'keywords', content: 'contact immobilier bonoua, téléphone agence immobilière, 0708342144, bonoua immobilier, contact loukman frères' },
-  ]
+    { property: 'og:title', content: 'Contact | Loukman & Frères Immobilier' },
+    { property: 'og:description', content: 'Contactez Loukman & Frères Immobilier — téléphone, email ou formulaire en ligne.' },
+    { property: 'og:image', content: siteUrl + '/og-image.svg' },
+    { property: 'og:url', content: siteUrl + '/contact' },
+    { property: 'og:type', content: 'website' },
+    { property: 'og:locale', content: 'fr_CI' },
+    { name: 'twitter:card', content: 'summary_large_image' },
+    { name: 'twitter:image', content: siteUrl + '/og-image.svg' },
+  ],
+  link: [
+    { rel: 'canonical', href: siteUrl + '/contact' },
+  ],
+  script: [
+    {
+      type: 'application/ld+json',
+      children: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'ContactPage',
+        name: 'Contact | Loukman & Frères Immobilier',
+        description: 'Contactez Loukman & Frères Immobilier — téléphone, email ou formulaire en ligne.',
+        url: siteUrl + '/contact',
+        mainEntity: {
+          '@type': 'Organization',
+          name: 'Loukman & Frères Immobilier',
+          telephone: '+2250708342144',
+          email: 'loukmanfreresimmobilier@gmail.com',
+          address: { '@type': 'PostalAddress', addressLocality: 'Bonoua', addressCountry: 'CI' },
+        },
+      }),
+    },
+  ],
 })
 
 useAnimateOnScroll()
@@ -103,9 +136,9 @@ async function submitForm() {
                   <Icon name="phone" class="w-4 h-4 text-gold" />
                   07 08 34 21 44
                 </a>
-                <a href="mailto:contact@loukmanfrere.ci" class="flex items-center gap-3 text-sm text-gray-600 hover:text-navy transition-colors">
+                <a href="mailto:loukmanfreresimmobilier@gmail.com" class="flex items-center gap-3 text-sm text-gray-600 hover:text-navy transition-colors">
                   <Icon name="mail" class="w-4 h-4 text-gold" />
-                  <span class="truncate">contact@loukmanfrere.ci</span>
+                  <span class="truncate">loukmanfreresimmobilier@gmail.com</span>
                 </a>
                 <p class="flex items-center gap-3 text-sm text-gray-600">
                   <Icon name="map-pin" class="w-4 h-4 text-gold" />

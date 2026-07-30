@@ -20,6 +20,7 @@ const avantages = [
               <img
                 src="/pdg.png"
                 alt="M. Atchunin Y. Antoine - PDG Loukman & Frères Immobilier"
+                loading="lazy"
                 class="w-full h-auto"
               />
             </div>

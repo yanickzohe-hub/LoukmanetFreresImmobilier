@@ -7,8 +7,10 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: 'URL du média requis' })
   }
 
-  const max = body.terrainId ? await prisma.media.aggregate({
-    where: { terrainId: parseInt(body.terrainId, 10) },
+  const terrainId = body.terrainId ? Number(body.terrainId) : null
+
+  const max = terrainId ? await prisma.media.aggregate({
+    where: { terrainId },
     _max: { ordre: true }
   }) : null
 
@@ -17,7 +19,7 @@ export default defineEventHandler(async (event) => {
       url: body.url,
       type: body.type || 'image',
       ordre: body.ordre ?? (max?._max.ordre ?? -1) + 1,
-      terrainId: body.terrainId ? parseInt(body.terrainId, 10) : null,
+      terrainId,
     }
   })
 })

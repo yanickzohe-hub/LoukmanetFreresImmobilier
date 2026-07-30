@@ -57,7 +57,7 @@ const sections = [
     desc: 'Une question, un projet ? Nous sommes à votre écoute.',
     contacts: [
       { icon: 'phone', value: '07 08 34 21 44', href: 'tel:0708342144' },
-      { icon: 'mail', value: 'contact@loukmanfrere.ci', href: 'mailto:contact@loukmanfrere.ci' },
+      { icon: 'mail', value: 'loukmanfreresimmobilier@gmail.com', href: 'mailto:loukmanfreresimmobilier@gmail.com' },
       { icon: 'map-pin', value: 'Bonoua, Yaou Nouveau Quartier' },
     ],
     link: '/contact',

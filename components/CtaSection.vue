@@ -11,7 +11,7 @@
           <Icon name="phone" class="w-4 h-4" />
           Appeler l'agence
         </a>
-        <a href="mailto:contact@loukmanfrere.ci" class="btn-outline">
+        <a href="mailto:loukmanfreresimmobilier@gmail.com" class="btn-outline">
           <Icon name="mail" class="w-4 h-4" />
           Envoyer un e-mail
         </a>
