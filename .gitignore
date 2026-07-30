@@ -22,7 +22,6 @@ npm-debug.log*
 /generated/prisma
 
 .vercel
-.env*
 
 # Uploads
 /storage
