@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
       .from(STORAGE_BUCKET)
       .remove([filename])
     if (error) {
-      console.error('Supabase delete error:', error.message)
+      console.error('Supabase delete error:', error.message) // eslint-disable-line no-console
     }
   }
 

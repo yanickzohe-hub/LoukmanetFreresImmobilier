@@ -8,7 +8,7 @@ export function useLottie() {
       cache.set(path, data.default || data)
       return cache.get(path)!
     } catch {
-      console.warn(`Lottie animation not found: ${path}`)
+      console.warn(`Lottie animation not found: ${path}`) // eslint-disable-line no-console
       return null
     }
   }

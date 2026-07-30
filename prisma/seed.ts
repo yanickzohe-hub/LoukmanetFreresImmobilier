@@ -11,12 +11,12 @@ async function main() {
   const existing = await prisma.admin.findUnique({ where: { email } })
 
   if (existing) {
-    console.log(`Admin déjà existant : ${email}`)
+    console.log(`Admin déjà existant : ${email}`) // eslint-disable-line no-console
   } else {
     await prisma.admin.create({
       data: { email, password: bcrypt.hashSync(password, 10), nom }
     })
-    console.log(`Admin créé : ${email} / ${password}`)
+    console.log(`Admin créé : ${email} / ${password}`) // eslint-disable-line no-console
   }
 
   const avisCount = await prisma.avis.count()
@@ -33,11 +33,11 @@ async function main() {
         { nom: 'Sidibé M.', message: 'En attente de mon titre foncier, mais l\'équipe m\'a bien guidé dans toutes les démarches administratives.', etoiles: 4, statut: 'en_attente' },
       ]
     })
-    console.log('Avis de démonstration créés')
+    console.log('Avis de démonstration créés') // eslint-disable-line no-console
   }
 
   }
 
 main()
-  .catch(console.error)
+  .catch(e => { console.error(e); process.exit(1) }) // eslint-disable-line no-console
   .finally(() => prisma.$disconnect())
