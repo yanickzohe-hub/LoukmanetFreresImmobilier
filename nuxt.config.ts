@@ -83,7 +83,6 @@ export default defineNuxtConfig({
 
   routeRules: {
     '/': { prerender: true },
-    '/terrains': { swr: 3600 },
     '/services': { prerender: true },
     '/a-propos': { prerender: true },
     '/contact': { prerender: true },
