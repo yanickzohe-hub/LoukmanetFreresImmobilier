@@ -35,7 +35,8 @@ async function main() {
     })
     console.log('Avis de démonstration créés')
   }
-}
+
+  }
 
 main()
   .catch(console.error)

@@ -2,7 +2,7 @@
 useAnimateOnScroll()
 
 const avantages = [
-  "Plus de 12 ans d'expertise locale à Bonoua",
+  "Plus de 12 ans d'expertise dans le Sud-Comoé, à Yamoussoukro et partout en Côte d'Ivoire",
   'Plus de 340 projets réalisés avec succès',
   '98% de clients satisfaits',
   'Titres fonciers sécurisés et transparents',
@@ -16,11 +16,11 @@ const avantages = [
       <div class="grid md:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
         <div class="animate-on-scroll">
           <div class="relative">
-            <div class="aspect-[4/3] rounded-2xl overflow-hidden shadow-card">
+            <div class="rounded-2xl overflow-hidden shadow-card">
               <img
                 src="/pdg.png"
                 alt="M. Atchunin Y. Antoine - PDG Loukman & Frères Immobilier"
-                class="w-full h-full object-cover"
+                class="w-full h-auto"
               />
             </div>
             <div class="absolute -bottom-3 -right-3 w-28 h-28 rounded-2xl bg-navy flex items-center justify-center shadow-lg">

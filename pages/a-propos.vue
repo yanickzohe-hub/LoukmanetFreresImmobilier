@@ -2,18 +2,18 @@
 useHead({
   title: 'À Propos | Loukman & Frères Immobilier',
   meta: [
-    { name: 'description', content: 'Découvrez Loukman & Frères Immobilier — expertise locale depuis 2012 à Bonoua. Vente de terrains, lotissement, construction et gestion immobilière en Côte d\'Ivoire.' },
+    { name: 'description', content: 'Découvrez Loukman & Frères Immobilier — expertise locale depuis 2012 dans le Sud-Comoé, à Yamoussoukro et partout en Côte d\'Ivoire. Vente de terrains, lotissement, construction et gestion immobilière.' },
     { name: 'keywords', content: 'loukman immobilier, agence immobilière bonoua, qui sommes-nous, expertise immobilière, atchunin antoine, immobilier côte d\'ivoire' },
   ]
 })
 
 useAnimateOnScroll()
 
-const pdgImage = 'https://placehold.co/600x600/0B1B3D/F5A623'
+const pdgImage = '/pdg.png'
 
 const blocs = [
   { icon: 'target', title: 'Notre Mission', desc: "Offrir à chaque client un accompagnement personnalisé pour trouver le terrain idéal et réaliser son projet immobilier en toute sérénité." },
-  { icon: 'eye', title: 'Notre Vision', desc: "Devenir la référence immobilière de la région de Bonoua, reconnue pour notre sérieux et notre transparence." },
+  { icon: 'eye', title: 'Notre Vision', desc: "Devenir la référence immobilière du Sud-Comoé, de Yamoussoukro et de toute la Côte d'Ivoire, reconnue pour notre sérieux et notre transparence." },
   { icon: 'handshake', title: 'Nos Valeurs', desc: "Proximité, confiance, transparence et professionnalisme — des valeurs qui guident chacune de nos actions." },
 ]
 </script>
@@ -35,7 +35,7 @@ const blocs = [
       <div class="section-container">
         <div class="grid md:grid-cols-2 gap-10 md:gap-16 items-center animate-on-scroll">
           <div>
-            <NuxtImg :src="pdgImage" alt="PDG Atchunin Y. Antoine - Loukman & Frères Immobilier" class="rounded-xl shadow-soft w-full" width="600" height="600" />
+            <NuxtImg :src="pdgImage" alt="PDG Atchunin Y. Antoine - Loukman & Frères Immobilier" class="rounded-xl shadow-soft w-full h-auto" width="600" />
           </div>
           <div>
             <h2 class="text-fluid-title mb-3">Une équipe dédiée</h2>
@@ -44,7 +44,7 @@ const blocs = [
               <p>
                 <strong class="text-navy">LOUKMAN & FRÈRES IMMOBILIER</strong> est une entreprise basée à Bonoua,
                 spécialisée dans la vente de terrains, le lotissement, l'aménagement, la construction
-                et la gestion immobilière.
+                et la gestion immobilière dans tout le Sud-Comoé, à Yamoussoukro et partout en Côte d'Ivoire.
               </p>
               <p>
                 Sous la direction de <strong class="text-navy">M. Atchunin Y. Antoine</strong>, notre entreprise s'engage

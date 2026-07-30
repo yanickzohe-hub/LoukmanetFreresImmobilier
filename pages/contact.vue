@@ -2,7 +2,7 @@
 useHead({
   title: 'Contact | Loukman & Frères Immobilier',
   meta: [
-    { name: 'description', content: 'Contactez Loukman & Frères Immobilier à Bonoua. Téléphone, email ou formulaire en ligne — nous sommes à votre disposition pour votre projet immobilier.' },
+    { name: 'description', content: 'Contactez Loukman & Frères Immobilier — intervention dans tout le Sud-Comoé, à Yamoussoukro et partout en Côte d\'Ivoire. Téléphone, email ou formulaire en ligne.' },
     { name: 'keywords', content: 'contact immobilier bonoua, téléphone agence immobilière, 0708342144, bonoua immobilier, contact loukman frères' },
   ]
 })
