@@ -46,7 +46,7 @@
 
       <div class="border-t border-white/10 mt-3 md:mt-6 pt-2 md:pt-4 flex flex-col sm:flex-row justify-between items-center gap-0.5 md:gap-1.5 text-[10px] md:text-[11px] text-white/40 md:text-white/50 text-center sm:text-left">
         <p>&copy; {{ new Date().getFullYear() }} Loukman & Frères</p>
-        <p>Capital : 1 000 000 FCFA — RC : RC-CI-GRDBSM-2023-B-3985 — SIS : 19 BP 36 ABIDJAN 19</p>
+        <p>Capital : 1 000 000 FCFA — RC : RC-CI-GRDBSM-2023-B-3965 — SIS : 15 BP 35 ABIDJAN 15</p>
       </div>
     </div>
   </footer>
