@@ -87,7 +87,7 @@ const blocs = [
                 à offrir un service sérieux, transparent et de proximité.
               </p>
               <p class="text-[0.6rem] md:text-[0.7rem] text-gray-500 pt-4 border-t border-gray-100">
-                Capital de 1 000 000 FCFA — RC-CI-GRDBSM-2023-B-3985 - SIS 19 BP 36 ABIDJAN 19
+                Capital de 1 000 000 FCFA — RC-CI-GRDBSM-2023-B-3965 - SIS 15 BP 35 ABIDJAN 15
               </p>
             </div>
           </div>
