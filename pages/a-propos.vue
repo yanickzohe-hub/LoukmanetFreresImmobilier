@@ -1,6 +1,6 @@
 <script setup>
 const config = useRuntimeConfig()
-const siteUrl = config.public.siteUrl || 'https://loukman-immobilier.com'
+const siteUrl = config.public.siteUrl || 'https://loukmanimmobilier.com'
 
 useHead({
   title: 'À Propos | Loukman & Frères Immobilier',
@@ -9,12 +9,12 @@ useHead({
     { name: 'keywords', content: 'loukman immobilier, agence immobilière bonoua, qui sommes-nous, expertise immobilière, atchunin antoine, immobilier côte d\'ivoire' },
     { property: 'og:title', content: 'À Propos | Loukman & Frères Immobilier' },
     { property: 'og:description', content: 'Découvrez Loukman & Frères Immobilier — expertise locale depuis 2012 dans le Sud-Comoé, à Yamoussoukro et partout en Côte d\'Ivoire.' },
-    { property: 'og:image', content: siteUrl + '/og-image.svg' },
+    { property: 'og:image', content: siteUrl + '/og-image.png' },
     { property: 'og:url', content: siteUrl + '/a-propos' },
     { property: 'og:type', content: 'website' },
     { property: 'og:locale', content: 'fr_CI' },
     { name: 'twitter:card', content: 'summary_large_image' },
-    { name: 'twitter:image', content: siteUrl + '/og-image.svg' },
+    { name: 'twitter:image', content: siteUrl + '/og-image.png' },
   ],
   link: [
     { rel: 'canonical', href: siteUrl + '/a-propos' },

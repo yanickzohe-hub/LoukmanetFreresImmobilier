@@ -1,0 +1,62 @@
+name: Supabase keepalive
+
+on:
+  schedule:
+    - cron: '17 13 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  keepalive:
+    name: Ping Supabase (PostgREST + site)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Requête PostgREST réelle
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_ANON_KEY || secrets.SUPABASE_SERVICE_KEY }}
+        run: |
+          set -euo pipefail
+          if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_KEY:-}" ]; then
+            echo "::error::Secrets GitHub manquants : SUPABASE_URL et SUPABASE_ANON_KEY (ou SUPABASE_SERVICE_KEY)"
+            exit 1
+          fi
+          ok=0
+          for table in Terrain terrain Avis avis; do
+            code=$(curl -s -o /tmp/rest.json -w '%{http_code}' --max-time 30 \
+              -H "apikey: ${SUPABASE_KEY}" \
+              -H "Authorization: Bearer ${SUPABASE_KEY}" \
+              "${SUPABASE_URL}/rest/v1/${table}?select=id&limit=1" || echo 000)
+            echo "GET /rest/v1/${table} -> ${code}"
+            if [ "$code" = "200" ]; then
+              ok=1
+              break
+            fi
+          done
+          if [ "$ok" != "1" ]; then
+            echo "::error::PostgREST injoignable : projet Supabase probablement en pause ou supprime"
+            cat /tmp/rest.json || true
+            exit 1
+          fi
+          echo "OK : requête PostgREST executee (activite DB enregistree)"
+
+      - name: Verifie que l'API du site repond 200
+        env:
+          SITE_URL: ${{ secrets.SITE_URL }}
+        run: |
+          set -euo pipefail
+          if [ -z "${SITE_URL:-}" ]; then
+            echo "Secret SITE_URL non defini : verification du site sautee"
+            exit 0
+          fi
+          code=$(curl -s -o /tmp/api.json -w '%{http_code}' --max-time 30 "${SITE_URL}/api/terrains" || echo 000)
+          echo "GET ${SITE_URL}/api/terrains -> ${code}"
+          if [ "$code" != "200" ]; then
+            echo "::error::API du site en echec (HTTP ${code}) : consulter les logs Vercel"
+            cat /tmp/api.json || true
+            exit 1
+          fi
+          echo "OK : API du site en 200"

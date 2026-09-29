@@ -1,15 +1,16 @@
 import jwt from 'jsonwebtoken'
 
 const JWT_SECRET = process.env.JWT_SECRET
-if (!JWT_SECRET) {
-  throw new Error('JWT_SECRET environnement manquant')
-}
 
 export default defineEventHandler((event) => {
   const path = event.path
 
   if (!path.startsWith('/api/admin')) {
     return
+  }
+
+  if (!JWT_SECRET) {
+    throw createError({ statusCode: 500, statusMessage: 'JWT_SECRET manquant sur le serveur' })
   }
 
   const authHeader = getHeader(event, 'authorization')

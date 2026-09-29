@@ -75,8 +75,15 @@ onMounted(async () => {
       ...d,
       typeLabel: docTypeLabels[d.type] || d.type
     }))
-  } catch {
-    error.value = 'Impossible de charger ce terrain'
+  } catch (err) {
+    const code = err?.statusCode || err?.data?.statusCode
+    if (code === 404) {
+      error.value = 'Terrain introuvable (404)'
+    } else if (code) {
+      error.value = `Impossible de charger ce terrain (erreur ${code}) — la base de données est peut-être injoignable.`
+    } else {
+      error.value = 'Impossible de charger ce terrain'
+    }
   } finally {
     loading.value = false
   }

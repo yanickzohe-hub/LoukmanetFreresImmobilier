@@ -11,6 +11,7 @@ interface AvisItem { id: number; nom: string; message: string; etoiles: number; 
 
 const avis = ref<AvisItem[]>([])
 const loading = ref(true)
+const loadError = ref('')
 const editingId = ref<number | null>(null)
 const editForm = ref({ nom: '', message: '', etoiles: 5, contact: '', statut: 'en_attente' })
 
@@ -21,15 +22,29 @@ const stats = computed(() => ({
   rejetes: avis.value.filter(a => a.statut === 'rejete').length,
 }))
 
-onMounted(async () => {
+function httpCode(err: unknown): number | undefined {
+  const e = err as { statusCode?: number; data?: { statusCode?: number } }
+  return e?.statusCode ?? e?.data?.statusCode
+}
+
+async function loadAvis() {
+  loading.value = true
+  loadError.value = ''
   try {
     avis.value = await $api('/api/admin/avis')
-  } catch {
+  } catch (err) {
     avis.value = []
+    const code = httpCode(err)
+    loadError.value = code
+      ? `Impossible de charger les avis (erreur ${code}) — la base de données est peut-être injoignable.`
+      : 'Impossible de charger les avis.'
+    show(loadError.value, 'error')
   } finally {
     loading.value = false
   }
-})
+}
+
+onMounted(loadAvis)
 
 async function updateStatut(id: number, statut: string) {
   try {
@@ -90,6 +105,14 @@ const statutBadge = (s: string) => {
     <div class="mb-8">
       <h1 class="text-2xl font-heading font-bold text-navy">Avis clients</h1>
       <p class="text-sm text-gray-500 mt-0.5">Gérez les avis laissés par vos clients</p>
+    </div>
+
+    <div v-if="!loading && loadError" class="mb-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3.5 flex flex-col sm:flex-row sm:items-center gap-3">
+      <div class="flex items-start gap-2.5 text-sm text-red-700">
+        <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg>
+        <p>{{ loadError }}</p>
+      </div>
+      <button @click="loadAvis" class="sm:ml-auto text-xs font-semibold text-red-700 bg-white border border-red-200 rounded-lg px-3 py-1.5 hover:bg-red-100 transition-all self-start sm:self-auto">Réessayer</button>
     </div>
 
     <div v-if="loading" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">

@@ -20,7 +20,7 @@ services:
       - NUXT_EMAIL_USER=${NUXT_EMAIL_USER}
       - NUXT_EMAIL_PASS=${NUXT_EMAIL_PASS}
       - NUXT_EMAIL_TO=${NUXT_EMAIL_TO}
-      - NUXT_PUBLIC_SITE_URL=${NUXT_PUBLIC_SITE_URL:-https://loukman-immobilier.ci}
+      - NUXT_PUBLIC_SITE_URL=${NUXT_PUBLIC_SITE_URL:-https://loukmanimmobilier.com}
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000',r=>process.exit(r.statusCode===200?0:1))"]

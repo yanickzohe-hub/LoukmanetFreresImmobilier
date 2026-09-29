@@ -1,8 +1,8 @@
 <script setup>
 const config = useRuntimeConfig()
-const siteUrl = config.public.siteUrl || 'https://loukman-immobilier.com'
+const siteUrl = config.public.siteUrl || 'https://loukmanimmobilier.com'
 
-const { data: terrains, status, error } = useFetch('/api/terrains', { key: 'catalog-terrains' })
+const { data: terrains, status, error, refresh } = useFetch('/api/terrains', { key: 'catalog-terrains' })
 
 const itemListJsonLd = computed(() => {
   if (!terrains.value) return null
@@ -29,12 +29,12 @@ useHead({
     { name: 'keywords', content: 'terrain bonoua, achat terrain, vente terrain côte d\'ivoire, terrains disponibles, lotissement yaou, terrain viabilisé, investissement terrain, prix terrain bonoua' },
     { property: 'og:title', content: 'Terrains Disponibles | Loukman & Frères Immobilier' },
     { property: 'og:description', content: 'Consultez nos terrains disponibles dans le Sud-Comoé, à Yamoussoukro et partout en Côte d\'Ivoire.' },
-    { property: 'og:image', content: siteUrl + '/og-image.svg' },
+    { property: 'og:image', content: siteUrl + '/og-image.png' },
     { property: 'og:url', content: siteUrl + '/terrains' },
     { property: 'og:type', content: 'website' },
     { property: 'og:locale', content: 'fr_CI' },
     { name: 'twitter:card', content: 'summary_large_image' },
-    { name: 'twitter:image', content: siteUrl + '/og-image.svg' },
+    { name: 'twitter:image', content: siteUrl + '/og-image.png' },
   ],
   link: [
     { rel: 'canonical', href: siteUrl + '/terrains' },
@@ -165,6 +165,12 @@ function nextImage(t, e) {
   const imgs = cardImages.value(t)
   if (!imgs.length) return
   currentIndex.value[t.id] = ((currentIndex.value[t.id] ?? 0) + 1) % imgs.length
+}
+
+function goToImage(t, index, e) {
+  e.preventDefault()
+  e.stopPropagation()
+  currentIndex.value[t.id] = index
   stopCarousel(t.id)
 }
 
@@ -280,6 +286,15 @@ function observeCard(el, i) {
               <div class="skeleton h-5 w-1/2"></div>
             </div>
           </div>
+        </div>
+
+        <div v-else-if="error" class="text-center py-16 animate-on-scroll">
+          <div class="w-16 h-16 rounded-2xl bg-red-50 flex items-center justify-center mx-auto mb-4">
+            <svg class="w-7 h-7 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m0 3.75h.008v.008H12v-.008zM21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <p class="text-gray-700 text-lg mb-2">Service momentanément indisponible</p>
+          <p class="text-gray-500 text-sm mb-6">Impossible de charger la liste des terrains. Réessayez dans quelques instants.</p>
+          <button @click="refresh()" class="btn-outline">Réessayer</button>
         </div>
 
         <div v-else-if="items.length === 0 && !recherche && !loading" class="text-center py-16 animate-on-scroll">

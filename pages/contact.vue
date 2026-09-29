@@ -1,6 +1,6 @@
 <script setup>
 const config = useRuntimeConfig()
-const siteUrl = config.public.siteUrl || 'https://loukman-immobilier.com'
+const siteUrl = config.public.siteUrl || 'https://loukmanimmobilier.com'
 
 useHead({
   title: 'Contact | Loukman & Frères Immobilier',
@@ -9,12 +9,12 @@ useHead({
     { name: 'keywords', content: 'contact immobilier bonoua, téléphone agence immobilière, 0708342144, bonoua immobilier, contact loukman frères' },
     { property: 'og:title', content: 'Contact | Loukman & Frères Immobilier' },
     { property: 'og:description', content: 'Contactez Loukman & Frères Immobilier — téléphone, email ou formulaire en ligne.' },
-    { property: 'og:image', content: siteUrl + '/og-image.svg' },
+    { property: 'og:image', content: siteUrl + '/og-image.png' },
     { property: 'og:url', content: siteUrl + '/contact' },
     { property: 'og:type', content: 'website' },
     { property: 'og:locale', content: 'fr_CI' },
     { name: 'twitter:card', content: 'summary_large_image' },
-    { name: 'twitter:image', content: siteUrl + '/og-image.svg' },
+    { name: 'twitter:image', content: siteUrl + '/og-image.png' },
   ],
   link: [
     { rel: 'canonical', href: siteUrl + '/contact' },

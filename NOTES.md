@@ -2,11 +2,11 @@
 
 ## Stack
 - Nuxt 3.21.8, TailwindCSS, @nuxt/image, @nuxtjs/sitemap
-- Prisma + SQLite (dev), déploiement Vercel
-- Domaine : loukman-immobilier.ci
+- Prisma + PostgreSQL (Supabase), déploiement Vercel
+- Domaine : loukmanimmobilier.com
 
 ## SEO (100/100 ✓)
-- robots.txt : domaine loukman-immobilier.ci, disallow /admin/
+- robots.txt : domaine loukmanimmobilier.com, disallow /admin/
 - Meta : og:image 1200×630, twitter:card, canonical, favicon SVG
 - Sitemap dynamique via `/api/__sitemap__/urls`
 - JSON-LD : RealEstateAgent (accueil), Product (chaque terrain)

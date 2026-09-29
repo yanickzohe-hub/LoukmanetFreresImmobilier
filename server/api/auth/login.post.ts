@@ -6,6 +6,10 @@ import { checkRateLimit } from '../../utils/ratelimit'
 const JWT_SECRET = process.env.JWT_SECRET
 
 export default defineEventHandler(async (event) => {
+  if (!JWT_SECRET) {
+    throw createError({ statusCode: 500, statusMessage: 'JWT_SECRET manquant sur le serveur' })
+  }
+
   const ip = getHeader(event, 'x-forwarded-for') || event.node.req.socket.remoteAddress || 'unknown'
   checkRateLimit(`login:${ip}`, 5, 15 * 60 * 1000)
 

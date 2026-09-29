@@ -1,6 +1,13 @@
 <script setup>
 definePageMeta({ layout: false })
 
+useHead({
+  title: 'Connexion administration | Loukman & Frères Immobilier',
+  meta: [
+    { name: 'robots', content: 'noindex, nofollow' },
+  ],
+})
+
 const { login } = useAdminAuth()
 const router = useRouter()
 const email = ref('')

@@ -38,5 +38,17 @@ export function useAdminAuth() {
     return token.value
   }
 
-  return { token, admin, init, login, logout, isAuthenticated, getToken }
+  function isTokenExpired(t?: string | null) {
+    const raw = t ?? token.value
+    if (!raw) return true
+    try {
+      const payload = JSON.parse(atob(raw.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')))
+      if (!payload.exp) return false
+      return payload.exp * 1000 <= Date.now()
+    } catch {
+      return false
+    }
+  }
+
+  return { token, admin, init, login, logout, isAuthenticated, getToken, isTokenExpired }
 }

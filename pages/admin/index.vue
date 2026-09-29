@@ -9,20 +9,30 @@ const { show } = useToast()
 
 const terrains = ref([])
 const loading = ref(true)
+const loadError = ref('')
 const recherche = ref('')
 const filtreStatut = ref('Tous')
 const page = ref(1)
 const perPage = 20
 
-onMounted(async () => {
+async function loadTerrains() {
+  loading.value = true
+  loadError.value = ''
   try {
     terrains.value = await $api('/api/admin/terrains')
-  } catch {
+  } catch (err) {
     terrains.value = []
+    const code = err?.statusCode || err?.data?.statusCode
+    loadError.value = code
+      ? `Impossible de charger les terrains (erreur ${code}) — la base de données est peut-être injoignable.`
+      : 'Impossible de charger les terrains.'
+    show(loadError.value, 'error')
   } finally {
     loading.value = false
   }
-})
+}
+
+onMounted(loadTerrains)
 
 const stats = computed(() => ({
   total: terrains.value.length,
@@ -36,8 +46,8 @@ const filtered = computed(() => {
   if (recherche.value) {
     const q = recherche.value.toLowerCase()
     result = result.filter(t =>
-      t.lieu.toLowerCase().includes(q) ||
-      t.quartier.toLowerCase().includes(q) ||
+      (t.lieu || '').toLowerCase().includes(q) ||
+      (t.quartier || '').toLowerCase().includes(q) ||
       (t.zone || '').toLowerCase().includes(q)
     )
   }
@@ -93,6 +103,14 @@ async function supprimer(id) {
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
         Nouveau terrain
       </NuxtLink>
+    </div>
+
+    <div v-if="!loading && loadError" class="mb-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3.5 flex flex-col sm:flex-row sm:items-center gap-3">
+      <div class="flex items-start gap-2.5 text-sm text-red-700">
+        <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg>
+        <p>{{ loadError }}</p>
+      </div>
+      <button @click="loadTerrains" class="sm:ml-auto text-xs font-semibold text-red-700 bg-white border border-red-200 rounded-lg px-3 py-1.5 hover:bg-red-100 transition-all self-start sm:self-auto">Réessayer</button>
     </div>
 
     <div v-if="loading" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
@@ -210,12 +228,15 @@ async function supprimer(id) {
                   :value="t.statut"
                   @change="changerStatut(t.id, $event.target.value)"
                   class="text-xs font-medium px-2 py-1 rounded-lg border-0 cursor-pointer focus:ring-2 focus:ring-navy/20 outline-none"
-                  :class="t.statut === 'Disponible' ? 'bg-green-50 text-green-700' : t.statut === 'R\u00e9serv\u00e9' ? 'bg-gold/10 text-navy' : 'bg-red-50 text-red-700'"
+                  :class="t.statut === 'Disponible' ? 'bg-green-50 text-green-700' : t.statut === 'Réservé' ? 'bg-gold/10 text-navy' : 'bg-red-50 text-red-700'"
                 >
                   <option value="Disponible" class="bg-white text-gray-700">Disponible</option>
                   <option value="Réservé" class="bg-white text-gray-700">Réservé</option>
                   <option value="Vendu" class="bg-white text-gray-700">Vendu</option>
                 </select>
+                <p v-if="t.statut !== 'Disponible'" class="mt-1.5 text-[10px] font-semibold uppercase tracking-wide text-amber-600 bg-amber-50 border border-amber-100 rounded px-1.5 py-0.5 inline-block">
+                  Masqué du site public
+                </p>
               </td>
               <td class="px-5 py-4 text-right">
                 <div class="flex items-center justify-end gap-1">

@@ -1,7 +1,7 @@
 <script setup>
 const route = useRoute()
 const config = useRuntimeConfig()
-const siteUrl = config.public.siteUrl || 'https://loukman-immobilier.com'
+const siteUrl = config.public.siteUrl || 'https://loukmanimmobilier.com'
 const id = Number(route.params.id)
 
 const { data: terrain } = await useFetch(`/api/terrains/${id}`)
@@ -66,6 +66,8 @@ useHead(() => {
   const title = `Terrain à ${item.lieu} - ${item.quartier} (${item.superficie}) | Loukman & Frères Immobilier`
   const description = `${item.description?.substring(0, 150) || 'Découvrez ce terrain disponible chez Loukman & Frères Immobilier.'} ${item.prix}.`
   const keywords = `terrain ${item.lieu}, ${item.quartier}, ${item.superficie}, ${item.prix}, vente terrain Bonoua, achat terrain Côte d'Ivoire, immobilier Bonoua`
+  const firstImage = item.images?.[0]?.url
+  const absoluteImage = firstImage ? (firstImage.startsWith('http') ? firstImage : siteUrl + firstImage) : `${siteUrl}/og-image.png`
 
   return {
     title,
@@ -74,14 +76,14 @@ useHead(() => {
       { name: 'keywords', content: keywords },
       { property: 'og:title', content: title },
       { property: 'og:description', content: description },
-      { property: 'og:image', content: item.images?.[0]?.url || `${siteUrl}/og-image.svg` },
+      { property: 'og:image', content: absoluteImage },
       { property: 'og:url', content: `${siteUrl}/terrains/${id}` },
       { property: 'og:type', content: 'website' },
       { property: 'og:locale', content: 'fr_CI' },
       { name: 'twitter:card', content: 'summary_large_image' },
       { name: 'twitter:title', content: title },
       { name: 'twitter:description', content: description },
-      { name: 'twitter:image', content: item.images?.[0]?.url || `${siteUrl}/og-image.svg` },
+      { name: 'twitter:image', content: absoluteImage },
     ],
     link: [{ rel: 'canonical', href: `${siteUrl}/terrains/${id}` }],
     script: [
@@ -92,7 +94,7 @@ useHead(() => {
           '@type': 'Product',
           name: `Terrain à ${item.lieu} - ${item.quartier}`,
           description: item.description || `Terrain de ${item.superficie} à ${item.lieu}.`,
-          image: item.images?.[0]?.url || `${siteUrl}/og-image.svg`,
+          image: absoluteImage,
           url: `${siteUrl}/terrains/${id}`,
           offers: {
             '@type': 'Offer',

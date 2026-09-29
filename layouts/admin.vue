@@ -29,6 +29,12 @@ function isActive(path) {
   if (path === '/admin') return route.path === '/admin'
   return route.path.startsWith(path)
 }
+
+useHead({
+  meta: [
+    { name: 'robots', content: 'noindex, nofollow' },
+  ],
+})
 </script>
 
 <template>

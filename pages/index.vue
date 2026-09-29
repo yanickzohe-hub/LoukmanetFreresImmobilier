@@ -30,7 +30,7 @@
 
 <script setup>
 const config = useRuntimeConfig()
-const siteUrl = config.public.siteUrl || 'https://loukman-immobilier.com'
+const siteUrl = config.public.siteUrl || 'https://loukmanimmobilier.com'
 
 useHead({
   title: 'Loukman & Frères Immobilier | Terrains, Construction et Gestion Immobilière à Bonoua',
@@ -39,12 +39,12 @@ useHead({
     { name: 'keywords', content: 'vente terrain bonoua, achat terrain grand-bassam, immobilier côte d\'ivoire, lotissement yaou, terrain viabilisé, construction villa bonoua, agence immobilière, terrains disponibles, investissement immobilier, loukman immobilier' },
     { property: 'og:title', content: 'Loukman & Frères Immobilier | Terrains, Construction et Gestion Immobilière à Bonoua' },
     { property: 'og:description', content: 'Vente de terrains, lotissement, construction et gestion immobilière dans le Sud-Comoé, à Yamoussoukro et partout en Côte d\'Ivoire. Depuis 2012, votre partenaire de confiance.' },
-    { property: 'og:image', content: siteUrl + '/og-image.svg' },
+    { property: 'og:image', content: siteUrl + '/og-image.png' },
     { property: 'og:url', content: siteUrl },
     { property: 'og:type', content: 'website' },
     { property: 'og:locale', content: 'fr_CI' },
     { name: 'twitter:card', content: 'summary_large_image' },
-    { name: 'twitter:image', content: siteUrl + '/og-image.svg' },
+    { name: 'twitter:image', content: siteUrl + '/og-image.png' },
   ],
   link: [
     { rel: 'canonical', href: siteUrl },
@@ -56,7 +56,7 @@ useHead({
         '@context': 'https://schema.org',
         '@type': 'RealEstateAgent',
         name: 'Loukman & Frères Immobilier',
-        image: siteUrl + '/og-image.svg',
+        image: siteUrl + '/og-image.png',
         url: siteUrl,
         telephone: '+2250708342144',
         email: 'loukmanfreresimmobilier@gmail.com',

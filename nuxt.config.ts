@@ -8,14 +8,14 @@ export default defineNuxtConfig({
   ],
 
   site: {
-    url: process.env.NUXT_PUBLIC_SITE_URL || 'https://loukman-immobilier.com',
+    url: process.env.NUXT_PUBLIC_SITE_URL || 'https://loukmanimmobilier.com',
   },
 
   sitemap: {
     sources: ['/api/__sitemap__/urls'],
-    siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://loukman-immobilier.com',
+    siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://loukmanimmobilier.com',
     autoI18n: false,
-    exclude: ['/admin/**'],
+    exclude: ['/admin/**', '/404'],
   },
 
   app: {
@@ -32,15 +32,15 @@ export default defineNuxtConfig({
         { property: 'og:title', content: 'Loukman & Frères Immobilier | Terrains, Construction et Gestion Immobilière à Bonoua' },
         { property: 'og:description', content: 'Vente de terrains, lotissement, construction et gestion immobilière à Bonoua, Côte d\'Ivoire.' },
         { property: 'og:type', content: 'website' },
-        { property: 'og:url', content: process.env.NUXT_PUBLIC_SITE_URL || 'https://loukman-immobilier.com' },
+        { property: 'og:url', content: process.env.NUXT_PUBLIC_SITE_URL || 'https://loukmanimmobilier.com' },
         { property: 'og:locale', content: 'fr_CI' },
-        { property: 'og:image', content: (process.env.NUXT_PUBLIC_SITE_URL || 'https://loukman-immobilier.com') + '/og-image.svg' },
+        { property: 'og:image', content: (process.env.NUXT_PUBLIC_SITE_URL || 'https://loukmanimmobilier.com') + '/og-image.png' },
         { property: 'og:image:width', content: '1200' },
         { property: 'og:image:height', content: '630' },
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:title', content: 'Loukman & Frères Immobilier | Terrains, Construction et Gestion Immobilière à Bonoua' },
         { name: 'twitter:description', content: 'Vente de terrains, lotissement, construction et gestion immobilière à Bonoua, Côte d\'Ivoire.' },
-        { name: 'twitter:image', content: (process.env.NUXT_PUBLIC_SITE_URL || 'https://loukman-immobilier.com') + '/og-image.svg' },
+        { name: 'twitter:image', content: (process.env.NUXT_PUBLIC_SITE_URL || 'https://loukmanimmobilier.com') + '/og-image.png' },
         { name: 'keywords', content: 'terrain bonoua, immobilier côte d\'ivoire, vente terrain bonoua, lotissement, construction bonoua, yaou nouveau quartier' }
       ],
       htmlAttrs: { lang: 'fr' },
@@ -77,7 +77,7 @@ export default defineNuxtConfig({
     emailPass: '',
     emailTo: 'loukmanfreresimmobilier@gmail.com',
     public: {
-      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://loukman-immobilier.com',
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://loukmanimmobilier.com',
     }
   },
 

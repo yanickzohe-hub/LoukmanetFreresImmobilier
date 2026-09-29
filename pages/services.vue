@@ -1,6 +1,6 @@
 <script setup>
 const config = useRuntimeConfig()
-const siteUrl = config.public.siteUrl || 'https://loukman-immobilier.com'
+const siteUrl = config.public.siteUrl || 'https://loukmanimmobilier.com'
 
 useHead({
   title: 'Nos Services | Loukman & Frères Immobilier',
@@ -9,12 +9,12 @@ useHead({
     { name: 'keywords', content: 'service immobilier bonoua, vente terrain, lotissement, construction villa, aménagement terrain, gestion immobilière, accompagnement projet' },
     { property: 'og:title', content: 'Nos Services | Loukman & Frères Immobilier' },
     { property: 'og:description', content: 'Vente de terrains, lotissement, construction et gestion immobilière dans le Sud-Comoé, à Yamoussoukro et partout en Côte d\'Ivoire.' },
-    { property: 'og:image', content: siteUrl + '/og-image.svg' },
+    { property: 'og:image', content: siteUrl + '/og-image.png' },
     { property: 'og:url', content: siteUrl + '/services' },
     { property: 'og:type', content: 'website' },
     { property: 'og:locale', content: 'fr_CI' },
     { name: 'twitter:card', content: 'summary_large_image' },
-    { name: 'twitter:image', content: siteUrl + '/og-image.svg' },
+    { name: 'twitter:image', content: siteUrl + '/og-image.png' },
   ],
   link: [
     { rel: 'canonical', href: siteUrl + '/services' },
