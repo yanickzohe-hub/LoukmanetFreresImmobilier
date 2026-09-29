@@ -13,6 +13,7 @@ export default defineEventHandler(async () => {
       { loc: '/services', changefreq: 'weekly', priority: '0.8' },
       { loc: '/a-propos', changefreq: 'monthly', priority: '0.7' },
       { loc: '/contact', changefreq: 'monthly', priority: '0.6' },
+      { loc: '/faq', changefreq: 'monthly', priority: '0.7' },
       ...terrains.map(t => ({
         loc: `/terrains/${t.id}`,
         lastmod: t.updatedAt?.toISOString(),

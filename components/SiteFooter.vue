@@ -31,6 +31,7 @@
             <li><NuxtLink to="/terrains" class="hover:text-white transition-colors">Terrains</NuxtLink></li>
             <li><NuxtLink to="/a-propos" class="hover:text-white transition-colors">À propos</NuxtLink></li>
             <li><NuxtLink to="/contact" class="hover:text-white transition-colors">Contact</NuxtLink></li>
+            <li><NuxtLink to="/faq" class="hover:text-white transition-colors">FAQ</NuxtLink></li>
           </ul>
         </div>
 

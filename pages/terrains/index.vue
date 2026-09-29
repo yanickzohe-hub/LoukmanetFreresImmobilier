@@ -23,12 +23,12 @@ const itemListJsonLd = computed(() => {
 })
 
 useHead({
-  title: 'Terrains Disponibles | Loukman & Frères Immobilier',
+  title: 'Terrains à vendre avec titre foncier | Loukman & Frères',
   meta: [
-    { name: 'description', content: 'Consultez nos terrains disponibles dans le Sud-Comoé, à Yamoussoukro et partout en Côte d\'Ivoire. Terrains viabilisés et sécurisés pour votre projet immobilier.' },
-    { name: 'keywords', content: 'terrain bonoua, achat terrain, vente terrain côte d\'ivoire, terrains disponibles, lotissement yaou, terrain viabilisé, investissement terrain, prix terrain bonoua' },
-    { property: 'og:title', content: 'Terrains Disponibles | Loukman & Frères Immobilier' },
-    { property: 'og:description', content: 'Consultez nos terrains disponibles dans le Sud-Comoé, à Yamoussoukro et partout en Côte d\'Ivoire.' },
+    { name: 'description', content: 'Terrains à vendre avec titre foncier à Bonoua, Grand-Bassam et Yamoussoukro : terrains viabilisés, lotissements et parcelles à investir en Côte d\'Ivoire. Prix et superficies à jour.' },
+    { name: 'keywords', content: 'terrain à vendre, terrain viabilisé titre foncier, terrain bonoua, prix terrain bonoua, lotissement yaou, achat terrain grand-bassam, terrain à investir, vente terrain côte d\'ivoire' },
+    { property: 'og:title', content: 'Terrains à vendre avec titre foncier | Loukman & Frères' },
+    { property: 'og:description', content: 'Terrains à vendre avec titre foncier à Bonoua, Grand-Bassam et Yamoussoukro : terrains viabilisés, lotissements et parcelles à investir en Côte d\'Ivoire.' },
     { property: 'og:image', content: siteUrl + '/og-image.png' },
     { property: 'og:url', content: siteUrl + '/terrains' },
     { property: 'og:type', content: 'website' },
@@ -194,7 +194,7 @@ function observeCard(el, i) {
   <div>
     <section data-hero-section class="pt-28 md:pt-36 pb-12 md:pb-16 px-5 md:px-8 lg:px-12 bg-navy text-center">
       <div class="max-w-3xl mx-auto animate-on-scroll">
-        <h1 class="text-white text-3xl md:text-4xl lg:text-5xl font-bold mb-3">Terrains Disponibles</h1>
+        <h1 class="text-white text-3xl md:text-4xl lg:text-5xl font-bold mb-3">Terrains à vendre</h1>
         <div class="w-12 h-0.5 bg-gold/60 rounded-full mx-auto mb-4"></div>
         <p class="text-white/70 text-base md:text-lg">
           Découvrez notre sélection de terrains dans le Sud-Comoé, à Yamoussoukro et partout en Côte d'Ivoire.
@@ -246,6 +246,15 @@ function observeCard(el, i) {
 
     <section class="section-padding">
       <div class="section-container">
+        <p class="max-w-4xl mx-auto text-gray-500 text-sm md:text-base leading-relaxed mb-8 animate-on-scroll">
+          Retrouvez nos terrains à vendre en Côte d'Ivoire : terrains viabilisés avec
+          titre foncier à Bonoua (Yaou Nouveau Quartier), Grand-Bassam et Yamoussoukro,
+          lotissements prêts à bâtir et parcelles à investir. Chaque annonce indique la
+          superficie réelle, le quartier, la zone et le prix en francs CFA. Filtrez par
+          lieu ou cherchez un quartier précis : {{ terrains?.length }} terrains disponibles,
+          catalogue renouvelé chaque semaine. Visite gratuite sur demande, accompagnement
+          complet jusqu'au notaire.
+        </p>
         <div class="flex flex-col gap-3 mb-8 max-w-5xl mx-auto w-full">
           <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
             <div class="relative w-full sm:max-w-md">
