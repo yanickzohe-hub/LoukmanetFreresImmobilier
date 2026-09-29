@@ -8,7 +8,12 @@ DATE=$(date +%Y-%m-%d_%H%M%S)
 BACKUP_DIR="backups"
 mkdir -p "$BACKUP_DIR"
 
-DB_URL="postgresql://postgres.rtrskedyeayuytfbkcrd:REDACTED_BY_PURGE@aws-1-eu-west-2.pooler.supabase.com:6543/postgres?pgbouncer=true"
+DB_URL="${DATABASE_URL:-}"
+if [ -z "$DB_URL" ]; then
+  echo "❌ DATABASE_URL manquant." >&2
+  echo "   Exporte-la avant de lancer :  DATABASE_URL=\"...\" bash scripts/backup.sh" >&2
+  exit 1
+fi
 
 echo "⏳ Backup en cours..."
 pg_dump --no-owner --clean "$DB_URL" > "$BACKUP_DIR/loukman-$DATE.sql"
