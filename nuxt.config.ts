@@ -86,6 +86,8 @@ export default defineNuxtConfig({
     '/services': { prerender: true },
     '/a-propos': { prerender: true },
     '/contact': { prerender: true },
+    '/terrains': { isr: 60 },
+    '/terrains/**': { isr: 60 },
   },
 
   compatibilityDate: '2026-01-01'
