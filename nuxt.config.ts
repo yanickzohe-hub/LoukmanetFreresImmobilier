@@ -1,3 +1,5 @@
+import { useBlogPosts } from './composables/useBlogPosts'
+
 export default defineNuxtConfig({
   devtools: { enabled: false },
 
@@ -65,6 +67,9 @@ export default defineNuxtConfig({
 
   nitro: {
     preset: 'vercel',
+    prerender: {
+      routes: useBlogPosts().map(p => `/blog/${p.slug}`),
+    },
     experimental: {
       bodySizeLimit: 15 * 1024 * 1024
     }
@@ -87,6 +92,7 @@ export default defineNuxtConfig({
     '/a-propos': { prerender: true },
     '/contact': { prerender: true },
     '/faq': { prerender: true },
+    '/blog': { prerender: true },
     '/terrains': { isr: 60 },
     '/terrains/**': { isr: 60 },
   },

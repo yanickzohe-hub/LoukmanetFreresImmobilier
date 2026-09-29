@@ -1,4 +1,5 @@
 import prisma from '../../utils/prisma'
+import { useBlogPosts } from '../../../composables/useBlogPosts'
 
 export default defineEventHandler(async () => {
   try {
@@ -14,6 +15,13 @@ export default defineEventHandler(async () => {
       { loc: '/a-propos', changefreq: 'monthly', priority: '0.7' },
       { loc: '/contact', changefreq: 'monthly', priority: '0.6' },
       { loc: '/faq', changefreq: 'monthly', priority: '0.7' },
+      { loc: '/blog', changefreq: 'weekly', priority: '0.8' },
+      ...useBlogPosts().map(p => ({
+        loc: `/blog/${p.slug}`,
+        lastmod: p.date,
+        changefreq: 'monthly',
+        priority: '0.7',
+      })),
       ...terrains.map(t => ({
         loc: `/terrains/${t.id}`,
         lastmod: t.updatedAt?.toISOString(),

@@ -32,6 +32,7 @@
             <li><NuxtLink to="/a-propos" class="hover:text-white transition-colors">À propos</NuxtLink></li>
             <li><NuxtLink to="/contact" class="hover:text-white transition-colors">Contact</NuxtLink></li>
             <li><NuxtLink to="/faq" class="hover:text-white transition-colors">FAQ</NuxtLink></li>
+            <li><NuxtLink to="/blog" class="hover:text-white transition-colors">Conseils</NuxtLink></li>
           </ul>
         </div>
 
