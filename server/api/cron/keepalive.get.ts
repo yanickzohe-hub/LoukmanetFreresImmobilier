@@ -30,6 +30,21 @@ async function postgrestPing() {
   return { ok: false, detail: `aucune table REST joignable (${REST_TABLES.join(', ')})` }
 }
 
+function detectSource(event: Parameters<typeof getHeader>[0]): string {
+  if (getHeader(event, 'x-vercel-cron')) return 'vercel'
+  const explicit = getHeader(event, 'x-source')
+  if (explicit) return explicit.slice(0, 32)
+  return 'manual'
+}
+
+async function logPing(data: { source: string, ok: boolean, sql: boolean, rest: boolean, detail: string, ms: number }) {
+  try {
+    await prisma.pingLog.create({ data })
+  } catch {
+    // la journalisation ne doit jamais faire échouer le keepalive
+  }
+}
+
 export default defineEventHandler(async (event) => {
   if (!CRON_SECRET) {
     throw createError({ statusCode: 500, statusMessage: 'CRON_SECRET manquant sur le serveur' })
@@ -40,6 +55,7 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 401, statusMessage: 'Non autorisé' })
   }
 
+  const source = detectSource(event)
   const started = Date.now()
   let sql = false
   let counts: Record<string, number> = {}
@@ -58,6 +74,7 @@ export default defineEventHandler(async (event) => {
 
   const rest = await postgrestPing()
   const ok = sql || rest.ok
+  const ms = Date.now() - started
 
   const body = {
     ok,
@@ -65,9 +82,18 @@ export default defineEventHandler(async (event) => {
     rest: rest.ok,
     detail: { sql: sql || sqlError, rest: rest.detail },
     counts,
-    ms: Date.now() - started,
+    ms,
     at: new Date().toISOString()
   }
+
+  await logPing({
+    source,
+    ok,
+    sql,
+    rest: rest.ok,
+    detail: `${sql ? 'sql ok' : sqlError} · ${rest.detail}`.slice(0, 300),
+    ms
+  })
 
   if (!ok) {
     throw createError({

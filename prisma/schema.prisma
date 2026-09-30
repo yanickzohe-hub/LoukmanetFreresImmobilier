@@ -63,3 +63,14 @@ model Document {
   terrain   Terrain  @relation(fields: [terrainId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
 }
+
+model PingLog {
+  id        Int      @id @default(autoincrement())
+  source    String
+  ok        Boolean  @default(true)
+  sql       Boolean  @default(false)
+  rest      Boolean  @default(false)
+  detail    String?
+  ms        Int      @default(0)
+  createdAt DateTime @default(now())
+}
