@@ -2,6 +2,7 @@
   "framework": "nuxtjs",
   "buildCommand": "npm run build",
   "outputDirectory": ".output/public",
+  "regions": ["lhr1"],
   "crons": [
     {
       "path": "/api/cron/keepalive",

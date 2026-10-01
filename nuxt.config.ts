@@ -93,8 +93,8 @@ export default defineNuxtConfig({
     '/contact': { prerender: true },
     '/faq': { prerender: true },
     '/blog': { prerender: true },
-    '/terrains': { isr: 60 },
-    '/terrains/**': { isr: 60 },
+    '/terrains': { isr: 30 },
+    '/terrains/**': { isr: 30 },
   },
 
   compatibilityDate: '2026-01-01'

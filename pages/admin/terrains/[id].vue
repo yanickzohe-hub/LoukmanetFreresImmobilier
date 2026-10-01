@@ -22,6 +22,7 @@ const form = ref({
   description: ''
 })
 const existingImages = ref([])
+const originalImageOrder = ref('')
 const existingDocuments = ref([])
 const newImages = ref([])
 const newDocuments = ref([])
@@ -71,6 +72,7 @@ onMounted(async () => {
       description: data.description || ''
     }
     existingImages.value = data.images || []
+    originalImageOrder.value = (data.images || []).map(m => m.id).join(',')
     existingDocuments.value = (data.documents || []).map(d => ({
       ...d,
       typeLabel: docTypeLabels[d.type] || d.type
@@ -226,41 +228,46 @@ async function handleSubmit() {
       }
     })
 
-    if (existingImages.value.length) {
-      await $api(`/api/admin/terrains/${route.params.id}/medias-reorder`, {
+    const tasks = []
+
+    const currentOrder = existingImages.value.map(m => m.id).join(',')
+    if (existingImages.value.length && currentOrder !== originalImageOrder.value) {
+      tasks.push($api(`/api/admin/terrains/${route.params.id}/medias-reorder`, {
         method: 'PATCH',
         body: { ordre: existingImages.value.map(m => m.id) }
-      })
+      }))
     }
 
     for (const img of newImages.value) {
-      await $api('/api/admin/medias', {
+      tasks.push($api('/api/admin/medias', {
         method: 'POST',
         body: { url: img.url, type: img.type, terrainId: parseInt(route.params.id) }
-      })
+      }))
     }
 
     if (newDocuments.value.length) {
-      const formData = new FormData()
-      for (const doc of newDocuments.value) {
-        formData.append('document', doc.file)
-      }
-      const uploaded = await $api('/api/admin/upload', {
-        method: 'POST',
-        body: formData
-      })
-      for (let i = 0; i < uploaded.length; i++) {
-        await $api('/api/admin/documents', {
+      tasks.push((async () => {
+        const formData = new FormData()
+        for (const doc of newDocuments.value) {
+          formData.append('document', doc.file)
+        }
+        const uploaded = await $api('/api/admin/upload', {
+          method: 'POST',
+          body: formData
+        })
+        await Promise.all(uploaded.map((file, i) => $api('/api/admin/documents', {
           method: 'POST',
           body: {
-            url: uploaded[i].url,
+            url: file.url,
             type: newDocuments.value[i].type,
             label: newDocuments.value[i].label || null,
             terrainId: parseInt(route.params.id)
           }
-        })
-      }
+        })))
+      })())
     }
+
+    await Promise.all(tasks)
 
     show('Terrain modifié avec succès')
     router.push('/admin')

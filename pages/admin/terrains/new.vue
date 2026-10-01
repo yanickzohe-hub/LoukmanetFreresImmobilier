@@ -160,36 +160,38 @@ async function handleSubmit() {
       }
     })
 
-    if (images.value.length) {
-      for (const img of images.value) {
-        await $api('/api/admin/medias', {
-          method: 'POST',
-          body: { url: img.url, type: img.type, terrainId: terrain.id }
-        })
-      }
+    const tasks = []
+
+    for (const img of images.value) {
+      tasks.push($api('/api/admin/medias', {
+        method: 'POST',
+        body: { url: img.url, type: img.type, terrainId: terrain.id }
+      }))
     }
 
     if (documents.value.length) {
-      const formData = new FormData()
-      for (const doc of documents.value) {
-        formData.append('document', doc.file)
-      }
-      const uploaded = await $api('/api/admin/upload', {
-        method: 'POST',
-        body: formData
-      })
-      for (let i = 0; i < uploaded.length; i++) {
-        await $api('/api/admin/documents', {
+      tasks.push((async () => {
+        const formData = new FormData()
+        for (const doc of documents.value) {
+          formData.append('document', doc.file)
+        }
+        const uploaded = await $api('/api/admin/upload', {
+          method: 'POST',
+          body: formData
+        })
+        await Promise.all(uploaded.map((file, i) => $api('/api/admin/documents', {
           method: 'POST',
           body: {
-            url: uploaded[i].url,
+            url: file.url,
             type: documents.value[i].type,
             label: documents.value[i].label || null,
             terrainId: terrain.id
           }
-        })
-      }
+        })))
+      })())
     }
+
+    await Promise.all(tasks)
 
     show('Terrain créé avec succès')
     router.push('/admin')
