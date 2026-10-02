@@ -4,9 +4,19 @@ import bcrypt from 'bcryptjs'
 const prisma = new PrismaClient()
 
 async function main() {
-  const email = process.env.ADMIN_EMAIL || 'admin@loukmanimmobilier.com'
-  const password = process.env.ADMIN_PASSWORD || 'admin123'
+  const email = process.env.ADMIN_EMAIL
+  const password = process.env.ADMIN_PASSWORD
   const nom = process.env.ADMIN_NOM || 'Administrateur'
+
+  if (!email || !password) {
+    console.error('ADMIN_EMAIL et ADMIN_PASSWORD sont requis pour le seed (aucun mot de passe par défaut).') // eslint-disable-line no-console
+    process.exit(1)
+  }
+
+  if (password.length < 10) {
+    console.error('ADMIN_PASSWORD doit contenir au moins 10 caractères.') // eslint-disable-line no-console
+    process.exit(1)
+  }
 
   const existing = await prisma.admin.findUnique({ where: { email } })
 
@@ -14,9 +24,9 @@ async function main() {
     console.log(`Admin déjà existant : ${email}`) // eslint-disable-line no-console
   } else {
     await prisma.admin.create({
-      data: { email, password: bcrypt.hashSync(password, 10), nom }
+      data: { email, password: bcrypt.hashSync(password, 12), nom }
     })
-    console.log(`Admin créé : ${email} / ${password}`) // eslint-disable-line no-console
+    console.log(`Admin créé : ${email}`) // eslint-disable-line no-console
   }
 
   const avisCount = await prisma.avis.count()
@@ -35,8 +45,7 @@ async function main() {
     })
     console.log('Avis de démonstration créés') // eslint-disable-line no-console
   }
-
-  }
+}
 
 main()
   .catch(e => { console.error(e); process.exit(1) }) // eslint-disable-line no-console

@@ -1,12 +1,6 @@
 export default defineNuxtRouteMiddleware(() => {
   if (import.meta.client) {
-    const { logout, isTokenExpired } = useAdminAuth()
-    const token = localStorage.getItem('admin_token')
-    if (!token) {
-      return navigateTo('/admin/login')
-    }
-    if (isTokenExpired(token)) {
-      logout()
+    if (!localStorage.getItem('admin_user')) {
       return navigateTo('/admin/login')
     }
   }

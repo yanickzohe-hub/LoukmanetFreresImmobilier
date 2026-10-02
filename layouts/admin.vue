@@ -1,5 +1,5 @@
 <script setup>
-const { admin, logout, getToken } = useAdminAuth()
+const { admin, logout } = useAdminAuth()
 const router = useRouter()
 const route = useRoute()
 const sidebarOpen = ref(false)
@@ -7,15 +7,13 @@ const avisEnAttente = ref(0)
 
 onMounted(async () => {
   try {
-    const data = await $fetch('/api/admin/avis/stats', {
-      headers: { Authorization: `Bearer ${getToken()}` }
-    })
+    const data = await $api('/api/admin/avis/stats')
     avisEnAttente.value = data.enAttente || 0
   } catch { /* ignore */ }
 })
 
-function deconnecter() {
-  logout()
+async function deconnecter() {
+  await logout()
   router.push('/admin/login')
 }
 

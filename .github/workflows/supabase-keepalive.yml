@@ -60,3 +60,25 @@ jobs:
             exit 1
           fi
           echo "OK : API du site en 200"
+
+      - name: Journalise le ping dans PingLog (source github)
+        env:
+          SITE_URL: ${{ secrets.SITE_URL }}
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          set -euo pipefail
+          if [ -z "${SITE_URL:-}" ] || [ -z "${CRON_SECRET:-}" ]; then
+            echo "::notice::Secrets manquants (SITE_URL ou CRON_SECRET) : journalisation PingLog sautee"
+            exit 0
+          fi
+          code=$(curl -s -o /tmp/ping.json -w '%{http_code}' --max-time 30 \
+            -H "Authorization: Bearer ${CRON_SECRET}" \
+            -H "x-source: github" \
+            "${SITE_URL}/api/cron/keepalive" || echo 000)
+          echo "GET ${SITE_URL}/api/cron/keepalive -> ${code}"
+          cat /tmp/ping.json || true
+          if [ "$code" != "200" ]; then
+            echo "::error::Keepalive via la route du site en echec (HTTP ${code})"
+            exit 1
+          fi
+          echo "OK : ping journalise avec la source github"

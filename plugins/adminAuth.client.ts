@@ -1,5 +1,5 @@
 export default defineNuxtPlugin(() => {
-  const { init, logout, isTokenExpired } = useAdminAuth()
+  const { init } = useAdminAuth()
   init()
 
   const router = useRouter()
@@ -7,11 +7,11 @@ export default defineNuxtPlugin(() => {
   const api = $fetch.create({
     onRequest({ options }) {
       const { getToken } = useAdminAuth()
-      const t = getToken()
-      if (t) {
+      const legacy = getToken()
+      if (legacy) {
         options.headers = {
           ...options.headers,
-          Authorization: `Bearer ${t}`
+          Authorization: `Bearer ${legacy}`
         }
       }
     },
@@ -25,10 +25,6 @@ export default defineNuxtPlugin(() => {
       }
     }
   })
-
-  if (isTokenExpired()) {
-    logout()
-  }
 
   return {
     provide: {

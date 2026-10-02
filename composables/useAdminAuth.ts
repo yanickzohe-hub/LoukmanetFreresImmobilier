@@ -1,13 +1,13 @@
-const token = ref<string | null>(null)
-const admin = ref<{ id: number; email: string; nom: string } | null>(null)
+const admin = ref<{ id: number, email: string, nom: string } | null>(null)
 
 export function useAdminAuth() {
   function init() {
-    const saved = localStorage.getItem('admin_token')
     const savedAdmin = localStorage.getItem('admin_user')
-    if (saved && savedAdmin) {
-      token.value = saved
+    if (!savedAdmin) return
+    try {
       admin.value = JSON.parse(savedAdmin)
+    } catch {
+      localStorage.removeItem('admin_user')
     }
   }
 
@@ -16,39 +16,26 @@ export function useAdminAuth() {
       method: 'POST',
       body: { email, password }
     })
-    token.value = data.token
     admin.value = data.admin
-    localStorage.setItem('admin_token', data.token)
     localStorage.setItem('admin_user', JSON.stringify(data.admin))
+    localStorage.removeItem('admin_token')
     return data
   }
 
-  function logout() {
-    token.value = null
+  async function logout() {
     admin.value = null
-    localStorage.removeItem('admin_token')
     localStorage.removeItem('admin_user')
+    localStorage.removeItem('admin_token')
+    await $fetch('/api/auth/logout', { method: 'POST' }).catch(() => {})
   }
 
   function isAuthenticated() {
-    return !!token.value
+    return !!admin.value
   }
 
   function getToken() {
-    return token.value
+    return localStorage.getItem('admin_token')
   }
 
-  function isTokenExpired(t?: string | null) {
-    const raw = t ?? token.value
-    if (!raw) return true
-    try {
-      const payload = JSON.parse(atob(raw.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')))
-      if (!payload.exp) return false
-      return payload.exp * 1000 <= Date.now()
-    } catch {
-      return false
-    }
-  }
-
-  return { token, admin, init, login, logout, isAuthenticated, getToken, isTokenExpired }
+  return { admin, init, login, logout, isAuthenticated, getToken }
 }

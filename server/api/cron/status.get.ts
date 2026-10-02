@@ -50,6 +50,13 @@ function sourceLabel(source: string): string {
 }
 
 export default defineEventHandler(async (event) => {
+  const CRON_SECRET = process.env.CRON_SECRET
+  const auth = getHeader(event, 'authorization')
+  const isCron = !!CRON_SECRET && auth === `Bearer ${CRON_SECRET}`
+  if (!isCron && !getAdminId(event)) {
+    throw createError({ statusCode: 401, statusMessage: 'Non autorisé' })
+  }
+
   const rows = await prisma.pingLog.findMany({
     orderBy: { createdAt: 'desc' },
     take: 20,
