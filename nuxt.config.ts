@@ -98,6 +98,9 @@ export default defineNuxtConfig({
     '/blog': { prerender: true },
     '/terrains': { isr: 30 },
     '/terrains/**': { isr: 30 },
+    '/favicon.png': { redirect: '/favicon-v2.png', redirectCode: 301 },
+    '/icon-192.png': { redirect: '/icon-192-v2.png', redirectCode: 301 },
+    '/apple-touch-icon.png': { redirect: '/apple-touch-icon-v2.png', redirectCode: 301 },
   },
 
   compatibilityDate: '2026-01-01'
