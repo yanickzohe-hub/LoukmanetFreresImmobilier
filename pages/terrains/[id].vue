@@ -67,7 +67,7 @@ useHead(() => {
   const description = `${item.description?.substring(0, 150) || 'Découvrez ce terrain disponible chez Loukman & Frères Immobilier.'} ${item.prix}.`
   const keywords = `terrain ${item.lieu}, ${item.quartier}, ${item.superficie}, ${item.prix}, vente terrain Bonoua, achat terrain Côte d'Ivoire, immobilier Bonoua`
   const firstImage = item.images?.[0]?.url
-  const absoluteImage = firstImage ? (firstImage.startsWith('http') ? firstImage : siteUrl + firstImage) : `${siteUrl}/og-image.png`
+  const absoluteImage = firstImage ? (firstImage.startsWith('http') ? firstImage : siteUrl + firstImage) : `${siteUrl}/logo1.png`
 
   return {
     title,
