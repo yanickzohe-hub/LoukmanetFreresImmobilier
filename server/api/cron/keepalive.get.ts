@@ -31,7 +31,9 @@ async function postgrestPing() {
 }
 
 function detectSource(event: Parameters<typeof getHeader>[0]): string {
-  if (getHeader(event, 'x-vercel-cron')) return 'vercel'
+  const ua = getHeader(event, 'user-agent') || ''
+  if (ua.includes('vercel-cron')) return 'vercel'
+  if (getHeader(event, 'x-vercel-cron-schedule')) return 'vercel'
   const explicit = getHeader(event, 'x-source')
   if (explicit) return explicit.slice(0, 32)
   return 'manual'
