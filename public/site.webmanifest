@@ -1,0 +1,23 @@
+{
+  "name": "Loukman & Frères Immobilier",
+  "short_name": "Loukman",
+  "description": "Vente de terrains, lotissement, aménagement, construction et gestion immobilière à Bonoua, Côte d'Ivoire.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#0B1B3D",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
