@@ -56,7 +56,7 @@ export default defineNuxtConfig({
   },
 
   image: {
-    domains: ['images.unsplash.com', 'placehold.co'],
+    domains: ['placehold.co'],
     format: ['webp'],
     screens: {
       sm: 375,

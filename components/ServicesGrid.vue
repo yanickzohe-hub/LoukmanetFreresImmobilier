@@ -23,12 +23,12 @@ function pauseForInteract() {
 }
 
 const services = [
-  { title: 'Vente de terrains', desc: 'Terrains sécurisés et bien situés à Bonoua et environs. Nous vous accompagnons dans le choix du terrain idéal pour votre projet, avec des titres fonciers clairs et une localisation stratégique.', icon: 'home', color: '#0B1B3D', img: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&h=400&fit=crop&q=80' },
-  { title: 'Lotissement', desc: 'Découpage et structuration de parcelles pour vos projets. Nous assurons la viabilisation complète : voiries, réseaux d\'eau, électricité et assainissement.', icon: 'map', color: '#1a3a6b', img: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=600&h=400&fit=crop&q=80' },
-  { title: 'Aménagement / Voirie', desc: 'Ouverture de voie et aménagement de zones constructibles. De la conception à la réalisation, nous transformons vos terrains en espaces prêts à bâtir.', icon: 'road', color: '#2a5a9b', img: 'https://images.unsplash.com/photo-1515169067868-5387ec356754?w=600&h=400&fit=crop&q=80' },
-  { title: 'Pose de poteaux', desc: "Installation de poteaux pour l'électrification des sites. Nous raccordons vos parcelles au réseau électrique avec des matériaux conformes aux normes.", icon: 'lightning', color: '#3a7acb', img: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=600&h=400&fit=crop&q=80' },
-  { title: 'Construction', desc: 'Accompagnement dans vos projets de construction. De la fondation à la toiture, nous supervisons chaque étape pour garantir qualité et respect des délais.', icon: 'building', color: '#4a9afb', img: 'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=600&h=400&fit=crop&q=80' },
-  { title: 'Gestion immobilière', desc: 'Location et gestion de biens en toute sérénité. Nous prenons en charge la recherche de locataires, la rédaction des baux et le suivi administratif.', icon: 'key', color: '#5abaff', img: 'https://images.unsplash.com/photo-1558036117-15d82a90b9b1?w=600&h=400&fit=crop&q=80' },
+  { title: 'Vente de terrains', desc: 'Terrains sécurisés et bien situés à Bonoua et environs. Nous vous accompagnons dans le choix du terrain idéal pour votre projet, avec des titres fonciers clairs et une localisation stratégique.', icon: 'home', color: '#0B1B3D', img: '/vente_de_terrains-paysage.jpeg' },
+  { title: 'Lotissement', desc: 'Découpage et structuration de parcelles pour vos projets. Nous assurons la viabilisation complète : voiries, réseaux d\'eau, électricité et assainissement.', icon: 'map', color: '#1a3a6b', img: '/lotissement-paysage.jpeg' },
+  { title: 'Aménagement / Voirie', desc: 'Ouverture de voie et aménagement de zones constructibles. De la conception à la réalisation, nous transformons vos terrains en espaces prêts à bâtir.', icon: 'road', color: '#2a5a9b', img: '/decapage-paysage.jpeg' },
+  { title: 'Pose de poteaux', desc: "Installation de poteaux pour l'électrification des sites. Nous raccordons vos parcelles au réseau électrique avec des matériaux conformes aux normes.", icon: 'lightning', color: '#3a7acb', img: '/pose_poto-paysage.jpeg' },
+  { title: 'Construction', desc: 'Accompagnement dans vos projets de construction. De la fondation à la toiture, nous supervisons chaque étape pour garantir qualité et respect des délais.', icon: 'building', color: '#4a9afb', img: '/construction-paysage.jpeg' },
+  { title: 'Gestion immobilière', desc: 'Location et gestion de biens en toute sérénité. Nous prenons en charge la recherche de locataires, la rédaction des baux et le suivi administratif.', icon: 'key', color: '#5abaff', img: '/gestion_immobiliere-paysage.jpeg' },
 ]
 
 function bringToFront(i) {

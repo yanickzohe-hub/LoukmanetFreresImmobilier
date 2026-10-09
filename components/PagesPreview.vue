@@ -14,7 +14,7 @@ const sections = [
     ],
     link: '/services',
     label: 'Tous nos services',
-    image: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=700&h=500&fit=crop&q=80',
+    image: '/construction-paysage.jpeg',
   },
   {
     id: 'terrains',
@@ -31,7 +31,7 @@ const sections = [
     ],
     link: '/terrains',
     label: 'Voir les terrains',
-    image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=700&h=500&fit=crop&q=80',
+    image: '/vente_de_terrains-paysage.jpeg',
   },
   {
     id: 'apropos',
@@ -48,7 +48,7 @@ const sections = [
     ],
     link: '/a-propos',
     label: 'Notre histoire',
-    image: 'https://placehold.co/700x500/0B1B3D/F5A623?text=Loukman+%26+Fr%C3%A8res',
+    image: '/decapage-paysage.jpeg',
   },
   {
     id: 'contact',
@@ -62,7 +62,7 @@ const sections = [
     ],
     link: '/contact',
     label: 'Nous contacter',
-    image: 'https://images.unsplash.com/photo-1557426272-fc759fdf7a8d?w=700&h=500&fit=crop&q=80',
+    image: '/bureauA-paysage.jpeg',
   },
 ]
 </script>
