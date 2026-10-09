@@ -150,32 +150,6 @@ defineProps({
   </svg>
 
   <svg
-    v-else-if="name === 'clipboard'"
-    :class="class"
-    fill="none"
-    stroke="currentColor"
-    viewBox="0 0 24 24"
-    stroke-width="1.5"
-  >
-    <path stroke-linecap="round" stroke-linejoin="round" d="M9 4.5H7.5A2.25 2.25 0 005.25 6.75v12A2.25 2.25 0 007.5 21h9a2.25 2.25 0 002.25-2.25v-12A2.25 2.25 0 0016.5 4.5H15" />
-    <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 4.5a1.5 1.5 0 012.98 0H15a.75.75 0 01.75.75v.75h-6.75v-.75A.75.75 0 019.75 4.5z" />
-    <path stroke-linecap="round" stroke-linejoin="round" d="M9 11.25l1.5 1.5 3-3.75M9 15.75l1.5 1.5 3-3.75" />
-  </svg>
-
-  <svg
-    v-else-if="name === 'globe'"
-    :class="class"
-    fill="none"
-    stroke="currentColor"
-    viewBox="0 0 24 24"
-    stroke-width="1.5"
-  >
-    <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9 9 0 100-18 9 9 0 000 18z" />
-    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c2.5 0 4.5 4.03 4.5 9S14.5 21 12 21 7.5 16.97 7.5 12 9.5 3 12 3z" />
-    <path stroke-linecap="round" stroke-linejoin="round" d="M3.6 9h16.8M3.6 15h16.8" />
-  </svg>
-
-  <svg
     v-else-if="name === 'search'"
     :class="class"
     fill="none"
