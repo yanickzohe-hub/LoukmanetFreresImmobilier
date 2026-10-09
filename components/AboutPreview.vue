@@ -17,11 +17,13 @@ const avantages = [
         <div class="animate-on-scroll">
           <div class="relative">
             <div class="rounded-2xl overflow-hidden shadow-card">
-              <img
-                src="/pdg.png"
-                alt="M. Atchunin Y. Antoine - PDG Loukman & Frères Immobilier"
+              <NuxtImg
+                src="/bureauA.jpeg"
+                alt="M. Atchunin Yao Antoine, Directeur général de Loukman & Frères Immobilier"
                 loading="lazy"
-                class="w-full h-auto"
+                class="w-full h-[380px] sm:h-[440px] md:h-[520px] object-cover object-top"
+                width="896"
+                height="1280"
               />
             </div>
             <div class="absolute -bottom-3 -right-3 w-28 h-28 rounded-2xl bg-navy flex items-center justify-center shadow-lg">
